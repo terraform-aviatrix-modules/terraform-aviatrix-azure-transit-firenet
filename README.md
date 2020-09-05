@@ -110,8 +110,7 @@ aviatrix_firenet | The created Aviatrix firenet object with all of it's attribut
 aviatrix_firewall_instance | A list of the created firewall instances and their attributes.
 azure_rg | The name of the Azure resource group that the Aviatrix infrastructure created in
 azure_vnet_name | The name of the Azure vnet created
-firewall_instance_1_nic_name | The name of the NIC of the first firewall
-firewall_instance_2_nic_name | The name of the NIC of the second firewall
+firewall_instance_nic_names | The names of the NICs of the firewall(s)
 fw_name | A list of the firewall names created
 
 
@@ -119,5 +118,5 @@ fw_name | A list of the firewall names created
 
 The module automates creation of 44 infrastructure components in Azure.
 
-<img src="https://avtx-tf-modules-images.s3.amazonaws.com/azure-firenet-module-infr.png"  height="350">
+<img src="https://github.com/terraform-aviatrix-modules/terraform-aviatrix-azure-transit-firenet/blob/master/img/azure-firenet-module-infr.png?raw=true">
 

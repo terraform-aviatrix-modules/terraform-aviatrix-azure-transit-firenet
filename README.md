@@ -3,9 +3,6 @@
 ### Description
 This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instances.
 
-### Diagram
-<img src="https://github.com/terraform-aviatrix-modules/terraform-aviatrix-azure-transit-firenet/blob/master/img/azure-transit-firenet.png?raw=true">
-
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
@@ -13,6 +10,9 @@ v1.0.2 | 0.12 | 6.1 | 2.16, 2.16.1
 v1.0.2 | 0.12 | 6.0 | 2.15, 2.15.1
 v1.0.1 | 0.12 | |
 v1.0.0 | 0.12 | |
+
+### Diagram
+<img src="https://github.com/terraform-aviatrix-modules/terraform-aviatrix-azure-transit-firenet/blob/master/img/azure-transit-firenet.png?raw=true">
 
 ### Usage Example
 

@@ -20,20 +20,20 @@ output "aviatrix_firewall_instance" {
 
 output "azure_vnet_name" {
   description = "Azure VNET name"
-  value = "${split(":", aviatrix_vpc.default.vpc_id)[0]}"
+  value       = "${split(":", aviatrix_vpc.default.vpc_id)[0]}"
 }
 
 output "azure_rg" {
-  description = "Azure resource group"  
-  value = "${split(":", aviatrix_vpc.default.vpc_id)[1]}"
+  description = "Azure resource group"
+  value       = "${split(":", aviatrix_vpc.default.vpc_id)[1]}"
 }
 
 output "firewall_instance_nic_names" {
   description = "The names of the NICs of the firewall(s)"
-  value = var.ha_gw ? [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_1[0].egress_interface)), join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_2[0].egress_interface))] : [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance[0].egress_interface))]
+  value       = var.ha_gw ? [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_1[0].egress_interface)), join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_2[0].egress_interface))] : [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance[0].egress_interface))]
 }
 
 output "firewall_name" {
   description = "A list of the firewall names created"
-  value = var.ha_gw ? [for name in aviatrix_firenet.firenet_ha[0].firewall_instance_association.*.instance_id : join("", regex("^(.*?):", name))] : [for name in aviatrix_firenet.firenet_single[0].firewall_instance_association.*.instance_id : join("", regex("^(.*?):", name))]
+  value       = var.ha_gw ? [for name in aviatrix_firenet.firenet_ha[0].firewall_instance_association.*.instance_id : join("", regex("^(.*?):", name))] : [for name in aviatrix_firenet.firenet_single[0].firewall_instance_association.*.instance_id : join("", regex("^(.*?):", name))]
 }

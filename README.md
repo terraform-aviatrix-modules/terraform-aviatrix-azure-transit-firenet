@@ -96,6 +96,8 @@ insane_mode | false | Set to true to enable Aviatrix insane mode high-performanc
 name | null | When this string is set, user defined name is applied to all infrastructure supporting n+1 sets within a same region or other customization
 egress_enabled | false | Set to true to enable egress inspection on the firewall instances
 inspection_enabled | true | Set to false to disable inspection on the firewall instances
+connected_transit | true | Set to false to disable connected_transit
+active_mesh | true | Set to false to disable active_mesh
 
 ### Outputs
 This module will return the following objects:

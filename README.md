@@ -22,7 +22,7 @@ Examples shown below are specific to each vendor.
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "1.0.1"
+  version                = "1.1.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East Us"
   account                = "Azure"
@@ -34,7 +34,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "1.0.1"
+  version                = "1.1.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East Us"
   account                = "Azure"
@@ -48,7 +48,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "1.0.1"
+  version                = "1.1.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East Us"
   account                = "Azure"

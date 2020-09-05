@@ -4,7 +4,7 @@
 This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instances.
 
 ### Diagram
-<img src="https://avtx-tf-modules-images.s3.amazonaws.com/azure-transit-firenet.png"  height="250">
+<img src="https://github.com/terraform-aviatrix-modules/terraform-aviatrix-azure-transit-firenet/blob/master/img/azure-transit-firenet.png?raw=true">
 
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
@@ -25,7 +25,7 @@ module "transit_firenet_1" {
   version                = "1.0.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East Us"
-  account_name           = "TM-Azure"
+  account                = "Azure"
   firewall_image         = "Palo Alto Networks VM-Series Next-Generation Firewall Bundle 1"
   firewall_image_version = "9.1.0"
 }
@@ -37,7 +37,7 @@ module "transit_firenet_1" {
   version                = "1.0.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East Us"
-  account_name           = "TM-Azure"
+  account                = "Azure"
   firewall_image         = "Check Point CloudGuard IaaS Single Gateway R80.40 - Bring Your Own License" 
   firewall_image_version = "8040.900294.0593"
 }
@@ -51,7 +51,7 @@ module "transit_firenet_1" {
   version                = "1.0.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East Us"
-  account_name           = "TM-Azure"
+  account                = "Azure"
   firewall_image         = "Fortinet FortiGate (BYOL) Next-Generation Firewall"
   firewall_image_version = "6.4.1"
 }
@@ -63,7 +63,7 @@ The following variables are required:
 key | value
 --- | ---
 region | Azure region to deploy the transit VNET in
-account_name | The Azure access account on the Aviatrix controller, under which the controller will deploy this VNET
+account | The Azure access account on the Aviatrix controller, under which the controller will deploy this VNET
 cidr | The IP CIDR wo be used to create the VNET
 firewall_image | String for the firewall image to use
 
@@ -96,6 +96,8 @@ insane_mode | false | Set to true to enable Aviatrix insane mode high-performanc
 name | null | When this string is set, user defined name is applied to all infrastructure supporting n+1 sets within a same region or other customization
 egress_enabled | false | Set to true to enable egress inspection on the firewall instances
 inspection_enabled | true | Set to false to disable inspection on the firewall instances
+connected_transit | true | Set to false to disable connected_transit
+active_mesh | true | Set to false to disable active_mesh
 
 ### Outputs
 This module will return the following objects:
@@ -108,8 +110,7 @@ aviatrix_firenet | The created Aviatrix firenet object with all of it's attribut
 aviatrix_firewall_instance | A list of the created firewall instances and their attributes.
 azure_rg | The name of the Azure resource group that the Aviatrix infrastructure created in
 azure_vnet_name | The name of the Azure vnet created
-firewall_instance_1_nic_name | The name of the NIC of the first firewall
-firewall_instance_2_nic_name | The name of the NIC of the second firewall
+firewall_instance_nic_names | The names of the NICs of the firewall(s)
 fw_name | A list of the firewall names created
 
 
@@ -117,5 +118,5 @@ fw_name | A list of the firewall names created
 
 The module automates creation of 44 infrastructure components in Azure.
 
-<img src="https://avtx-tf-modules-images.s3.amazonaws.com/azure-firenet-module-infr.png"  height="350">
+<img src="https://github.com/terraform-aviatrix-modules/terraform-aviatrix-azure-transit-firenet/blob/master/img/azure-firenet-module-infr.png?raw=true">
 

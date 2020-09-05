@@ -8,7 +8,7 @@ variable "cidr" {
   type        = string
 }
 
-variable "account_name" {
+variable "account" {
   description = "The Azure account name, as known by the Aviatrix controller"
   type        = string
 }
@@ -24,14 +24,6 @@ variable "fw_instance_size" {
   type        = string
   default     = "Standard_D3_v2"
 }
-
-/*
-variable "is_checkpoint" {
-  description = "Boolean to determine if module deploys Check Point"
-  type        = bool
-  default     = false
-}
-*/
 
 variable "checkpoint_password" {
   description = "Check Point firewall instance password"
@@ -85,13 +77,25 @@ variable "inspection_enabled" {
   default     = true
 }
 
-
-locals {
-  is_checkpoint = length(regexall("check", lower(var.firewall_image))) > 0 #Check if fw image contains checkpoint. Needs special handling for the username/password
-}
-
 variable "insane_mode" {
   description = "Set to true to enable Aviatrix high performance encryption."
   type        = bool
   default     = false
 }
+
+variable "connected_transit" {
+  description = "Set to false to disable connected transit."
+  type        = bool
+  default     = true
+}
+
+variable "active_mesh" {
+  description = "Set to false to disable active mesh."
+  type        = bool
+  default     = true
+}
+
+locals {
+  is_checkpoint = length(regexall("check", lower(var.firewall_image))) > 0 #Check if fw image contains checkpoint. Needs special handling for the username/password
+}
+

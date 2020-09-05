@@ -8,7 +8,7 @@ variable "cidr" {
   type        = string
 }
 
-variable "account_name" {
+variable "account" {
   description = "The Azure account name, as known by the Aviatrix controller"
   type        = string
 }

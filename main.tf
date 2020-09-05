@@ -4,7 +4,7 @@ resource "aviatrix_vpc" "default" {
   name                 = length(var.name) > 0 ? "avx-${var.name}-transit" : replace(lower("avx-${var.region}-transit"), " ", "-")
   region               = var.region
   cidr                 = var.cidr
-  account_name         = var.account_name
+  account_name         = var.account
   aviatrix_firenet_vpc = true
   aviatrix_transit_vpc = false
 }
@@ -18,7 +18,7 @@ resource "aviatrix_transit_gateway" "single" {
   gw_name                = length(var.name) > 0 ? "avx-${var.name}-transit" : replace(lower("avx-${var.region}-transit"), " ", "-")
   gw_size                = var.instance_size
   vpc_id                 = aviatrix_vpc.default.vpc_id
-  account_name           = var.account_name
+  account_name           = var.account
   subnet                 = var.insane_mode ? cidrsubnet(aviatrix_vpc.default.cidr, 3, 6) : aviatrix_vpc.default.subnets[0].cidr
   insane_mode            = var.insane_mode ? true : false
   enable_transit_firenet = true
@@ -34,7 +34,7 @@ resource "aviatrix_transit_gateway" "ha" {
   gw_name                = length(var.name) > 0 ? "avx-${var.name}-transit" : replace(lower("avx-${var.region}-transit"), " ", "-")
   gw_size                = var.insane_mode ? "Standard_D3_v2" : var.instance_size
   vpc_id                 = aviatrix_vpc.default.vpc_id
-  account_name           = var.account_name
+  account_name           = var.account
   subnet                 = var.insane_mode ? cidrsubnet(aviatrix_vpc.default.cidr, 3, 6) : aviatrix_vpc.default.subnets[0].cidr
   ha_subnet              = var.insane_mode ? cidrsubnet(aviatrix_vpc.default.cidr, 3, 7) : aviatrix_vpc.default.subnets[2].cidr
   insane_mode            = var.insane_mode ? true : false

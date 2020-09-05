@@ -25,7 +25,7 @@ module "transit_firenet_1" {
   version                = "1.0.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East Us"
-  account_name           = "TM-Azure"
+  account                = "Azure"
   firewall_image         = "Palo Alto Networks VM-Series Next-Generation Firewall Bundle 1"
   firewall_image_version = "9.1.0"
 }
@@ -37,7 +37,7 @@ module "transit_firenet_1" {
   version                = "1.0.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East Us"
-  account_name           = "TM-Azure"
+  account                = "Azure"
   firewall_image         = "Check Point CloudGuard IaaS Single Gateway R80.40 - Bring Your Own License" 
   firewall_image_version = "8040.900294.0593"
 }
@@ -51,7 +51,7 @@ module "transit_firenet_1" {
   version                = "1.0.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East Us"
-  account_name           = "TM-Azure"
+  account                = "Azure"
   firewall_image         = "Fortinet FortiGate (BYOL) Next-Generation Firewall"
   firewall_image_version = "6.4.1"
 }
@@ -63,7 +63,7 @@ The following variables are required:
 key | value
 --- | ---
 region | Azure region to deploy the transit VNET in
-account_name | The Azure access account on the Aviatrix controller, under which the controller will deploy this VNET
+account | The Azure access account on the Aviatrix controller, under which the controller will deploy this VNET
 cidr | The IP CIDR wo be used to create the VNET
 firewall_image | String for the firewall image to use
 

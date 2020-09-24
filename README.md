@@ -97,6 +97,8 @@ name | null | When this string is set, user defined name is applied to all infra
 egress_enabled | false | Set to true to enable egress inspection on the firewall instances
 inspection_enabled | true | Set to false to disable inspection on the firewall instances
 connected_transit | true | Set to false to disable connected_transit
+bgp_manual_spoke_advertise_cidrs | | Intended CIDR list to advertise via BGP. Example: "10.2.0.0/16,10.4.0.0/16" 
+learned_cidr_approval | false | Switch to true to enable learned CIDR approval
 active_mesh | true | Set to false to disable active_mesh
 
 ### Outputs

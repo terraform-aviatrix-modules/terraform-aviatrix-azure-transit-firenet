@@ -11,7 +11,6 @@ resource "aviatrix_vpc" "default" {
 
 #Transit GW
 resource "aviatrix_transit_gateway" "default" {
-  count                            = var.ha_gw ? 1 : 0
   enable_active_mesh               = var.active_mesh
   cloud_type                       = 8
   vpc_reg                          = var.region

@@ -6,6 +6,7 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
+v1.1.1 | | |
 v1.0.2 | 0.12 | 6.1 | 2.16, 2.16.1
 v1.0.2 | 0.12 | 6.0 | 2.15, 2.15.1
 v1.0.1 | 0.12 | |
@@ -22,7 +23,7 @@ Examples shown below are specific to each vendor.
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "1.1.0"
+  version                = "1.1.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -34,7 +35,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "1.1.0"
+  version                = "1.1.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -48,7 +49,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "1.1.0"
+  version                = "1.1.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -100,6 +101,8 @@ connected_transit | true | Set to false to disable connected_transit
 bgp_manual_spoke_advertise_cidrs | | Intended CIDR list to advertise via BGP. Example: "10.2.0.0/16,10.4.0.0/16" 
 learned_cidr_approval | false | Switch to true to enable learned CIDR approval
 active_mesh | true | Set to false to disable active_mesh
+prefix | true | Boolean to enable prefix name with avx-
+suffix | true | Boolean to enable suffix name with -firenet
 
 ### Outputs
 This module will return the following objects:

@@ -119,6 +119,12 @@ variable "active_mesh" {
   default     = true
 }
 
+variable "enable_segmentation" {
+  description = "Switch to true to enable transit segmentation"
+  type        = bool
+  default     = false
+}
+
 locals {
   is_checkpoint = length(regexall("check", lower(var.firewall_image))) > 0 #Check if fw image contains checkpoint. Needs special handling for the username/password
   lower_name    = length(var.name) > 0 ? replace(lower(var.name), " ", "-") : replace(lower(var.region), " ", "-")

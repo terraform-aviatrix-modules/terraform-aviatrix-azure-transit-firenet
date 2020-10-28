@@ -19,6 +19,12 @@ variable "instance_size" {
   default     = "Standard_B2ms"
 }
 
+variable "insane_instance_size" {
+  description = "Azure Instance size for the Aviatrix gateways"
+  type        = string
+  default     = "Standard_D3_v2"
+}
+
 variable "fw_instance_size" {
   description = "Azure Instance size for the NGFW's"
   type        = string

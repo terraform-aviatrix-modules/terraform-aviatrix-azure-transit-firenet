@@ -6,7 +6,7 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
-v2.0.0 | 0.12 | >=6.2 | >=0.2.17
+v2.0.0,v2.0.1 | 0.12 | >=6.2 | >=0.2.17
 v1.1.1 | | |
 v1.0.2 | 0.12 | 6.1 | 2.16, 2.16.1
 v1.0.2 | 0.12 | 6.0 | 2.15, 2.15.1
@@ -106,7 +106,9 @@ prefix | true | Boolean to enable prefix name with avx-
 suffix | true | Boolean to enable suffix name with -firenet
 enable_segmentation | false | Switch to true to enable transit segmentation
 insane_instance_size | Standard_D3_v2 | Instance size used when insane mode is enabled.
+enable_egress_transit_firenet | false | Switch to true to enable egress on the transit firenet.
 
+ 
 ### Outputs
 This module will return the following objects:
 

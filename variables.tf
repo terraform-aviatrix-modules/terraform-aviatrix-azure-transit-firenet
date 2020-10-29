@@ -126,7 +126,13 @@ variable "active_mesh" {
 }
 
 variable "enable_segmentation" {
-  description = "Switch to true to enable transit segmentation"
+  description = "Switch to true to enable transit segmentation."
+  type        = bool
+  default     = false
+}
+
+variable "enable_egress_transit_firenet" {
+  description = "Switch to true to enable egress on the transit firenet."
   type        = bool
   default     = false
 }

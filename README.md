@@ -105,6 +105,7 @@ active_mesh | true | Set to false to disable active_mesh
 prefix | true | Boolean to enable prefix name with avx-
 suffix | true | Boolean to enable suffix name with -firenet
 enable_segmentation | false | Switch to true to enable transit segmentation
+insane_instance_size | Standard_D3_v2 | Instance size used when insane mode is enabled.
 
 ### Outputs
 This module will return the following objects:

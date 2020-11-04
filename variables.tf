@@ -131,6 +131,30 @@ variable "enable_segmentation" {
   default     = false
 }
 
+variable "single_ip_snat" {
+  description = "Enable single_ip mode Source NAT for this container"
+  type        = bool
+  default     = false
+}
+
+variable "enable_advertise_transit_cidr" {
+  description = "Switch to enable/disable advertise transit VPC network CIDR for a VGW connection"
+  type        = bool
+  default     = false
+}
+
+variable "bgp_polling_time" {
+  description = "BGP route polling time. Unit is in seconds"
+  type        = string
+  default     = "50"
+}
+
+variable "bgp_ecmp" {
+  description = "Enable Equal Cost Multi Path (ECMP) routing for the next hop"
+  type        = bool
+  default     = false
+}
+
 locals {
   is_checkpoint = length(regexall("check", lower(var.firewall_image))) > 0 #Check if fw image contains checkpoint. Needs special handling for the username/password
   lower_name    = length(var.name) > 0 ? replace(lower(var.name), " ", "-") : replace(lower(var.region), " ", "-")

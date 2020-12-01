@@ -108,6 +108,13 @@ enable_segmentation | false | Switch to true to enable transit segmentation
 insane_instance_size | Standard_D3_v2 | Instance size used when insane mode is enabled.
 enable_egress_transit_firenet | false | Switch to true to enable egress on the transit firenet.
 
+single_az_ha | true | Set to false if Controller managed Gateway HA is desired
+single_ip_snat | false | Enable single_ip mode Source NAT for this container
+enable_advertise_transit_cidr  | false | Switch to enable/disable advertise transit VPC network CIDR for a VGW connection
+bgp_polling_time  | 50 | BGP route polling time. Unit is in seconds
+bgp_ecmp  | false | Enable Equal Cost Multi Path (ECMP) routing for the next hop
+
+
  
 ### Outputs
 This module will return the following objects:

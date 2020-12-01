@@ -28,6 +28,11 @@ resource "aviatrix_transit_gateway" "default" {
   enable_learned_cidrs_approval    = var.learned_cidr_approval
   enable_segmentation              = var.enable_segmentation
   enable_egress_transit_firenet    = var.enable_egress_transit_firenet
+  single_az_ha                     = var.single_az_ha
+  single_ip_snat                   = var.single_ip_snat
+  enable_advertise_transit_cidr    = var.enable_advertise_transit_cidr
+  bgp_polling_time                 = var.bgp_polling_time
+  bgp_ecmp                         = var.bgp_ecmp
 }
 
 #Single instance

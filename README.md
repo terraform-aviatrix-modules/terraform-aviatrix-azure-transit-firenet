@@ -6,7 +6,9 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
-v2.0.0,v2.0.1 | 0.12 | >=6.2 | >=0.2.17
+v2.0.2 | 0.12,0.13 | >=6.2 | >=0.2.17.1
+v2.0.1 | 0.12 | >=6.2 | >=0.2.17
+v2.0.0 | 0.12 | >=6.2 | >=0.2.17
 v1.1.1 | | |
 v1.0.2 | 0.12 | 6.1 | 2.16, 2.16.1
 v1.0.2 | 0.12 | 6.0 | 2.15, 2.15.1
@@ -24,7 +26,7 @@ Examples shown below are specific to each vendor.
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "2.0.0"
+  version                = "2.0.2"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -36,7 +38,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "2.0.0"
+  version                = "2.0.2"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -50,7 +52,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "2.0.0"
+  version                = "2.0.2"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -107,7 +109,6 @@ suffix | true | Boolean to enable suffix name with -firenet
 enable_segmentation | false | Switch to true to enable transit segmentation
 insane_instance_size | Standard_D3_v2 | Instance size used when insane mode is enabled.
 enable_egress_transit_firenet | false | Switch to true to enable egress on the transit firenet.
-
 single_az_ha | true | Set to false if Controller managed Gateway HA is desired
 single_ip_snat | false | Enable single_ip mode Source NAT for this container
 enable_advertise_transit_cidr  | false | Switch to enable/disable advertise transit VPC network CIDR for a VGW connection

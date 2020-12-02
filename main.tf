@@ -27,7 +27,6 @@ resource "aviatrix_transit_gateway" "default" {
   bgp_manual_spoke_advertise_cidrs = var.bgp_manual_spoke_advertise_cidrs
   enable_learned_cidrs_approval    = var.learned_cidr_approval
   enable_segmentation              = var.enable_segmentation
-  enable_egress_transit_firenet    = var.enable_egress_transit_firenet
   single_az_ha                     = var.single_az_ha
   single_ip_snat                   = var.single_ip_snat
   enable_advertise_transit_cidr    = var.enable_advertise_transit_cidr
@@ -47,7 +46,7 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
   firenet_gw_name        = aviatrix_transit_gateway.default.gw_name
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = local.is_checkpoint ? var.checkpoint_password : ""
-  management_subnet      = aviatrix_vpc.default.subnets[2].cidr
+  management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : ""
 }
 
 #Dual instance
@@ -62,7 +61,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
   firenet_gw_name        = aviatrix_transit_gateway.default.gw_name
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = local.is_checkpoint ? var.checkpoint_password : ""
-  management_subnet      = aviatrix_vpc.default.subnets[2].cidr
+  management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : ""
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_2" {
@@ -76,7 +75,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   firenet_gw_name        = "${aviatrix_transit_gateway.default.gw_name}-hagw"
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = local.is_checkpoint ? var.checkpoint_password : ""
-  management_subnet      = aviatrix_vpc.default.subnets[3].cidr
+  management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[3].cidr : ""
 }
 
 resource "aviatrix_firenet" "firenet_single" {

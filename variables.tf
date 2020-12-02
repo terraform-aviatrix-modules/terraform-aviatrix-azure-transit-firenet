@@ -163,7 +163,7 @@ variable "bgp_ecmp" {
 
 locals {
   is_checkpoint = length(regexall("check", lower(var.firewall_image))) > 0 #Check if fw image contains checkpoint. Needs special handling for the username/password
-  is_palo       = length(regexall("palo", lower(var.firewall_image))) > 0 #Check if fw image contains palo. Needs special handling for management_subnet (CP & Fortigate null)
+  is_palo       = length(regexall("palo", lower(var.firewall_image))) > 0  #Check if fw image contains palo. Needs special handling for management_subnet (CP & Fortigate null)
   lower_name    = length(var.name) > 0 ? replace(lower(var.name), " ", "-") : replace(lower(var.region), " ", "-")
   prefix        = var.prefix ? "avx-" : ""
   suffix        = var.suffix ? "-firenet" : ""

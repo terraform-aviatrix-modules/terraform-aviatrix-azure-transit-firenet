@@ -6,14 +6,14 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
-v2.0.2 | 0.12,0.13 | >=6.2 | >=0.2.17.1
-v2.0.1 | 0.12 | >=6.2 | >=0.2.17
-v2.0.0 | 0.12 | >=6.2 | >=0.2.17
-v1.1.1 | | |
+v3.0.0 | 0.13 | >=6.2 | >=2.17.2
+v2.0.2 | 0.12 | >=6.2 | >=2.17.1
+v2.0.1 | 0.12 | >=6.2 | >=2.17
+v2.0.0 | 0.12 | >=6.2 | >=2.17
 v1.0.2 | 0.12 | 6.1 | 2.16, 2.16.1
 v1.0.2 | 0.12 | 6.0 | 2.15, 2.15.1
-v1.0.1 | 0.12 | |
-v1.0.0 | 0.12 | |
+
+**_Information on older releases can be found in respective release notes._*
 
 ### Diagram
 <img src="https://github.com/terraform-aviatrix-modules/terraform-aviatrix-azure-transit-firenet/blob/master/img/azure-transit-firenet.png?raw=true">
@@ -26,7 +26,7 @@ Examples shown below are specific to each vendor.
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "2.0.2"
+  version                = "3.0.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -38,7 +38,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "2.0.2"
+  version                = "3.0.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -52,7 +52,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "2.0.2"
+  version                = "3.0.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -70,7 +70,7 @@ region | Azure region to deploy the transit VNET in
 account | The Azure access account on the Aviatrix controller, under which the controller will deploy this VNET
 cidr | The IP CIDR wo be used to create the VNET
 firewall_image | String for the firewall image to use
-
+firewall_image_version | The firewall image version specific to the NGFW vendor image
 
 Firewall images
 ```
@@ -93,7 +93,7 @@ key | default | value
 instance_size | Standard_B2ms | Size of the transit gateway instances. **Insane mode requires a minimum Standard_D3_v2 instance size**
 fw_instance_size | Standard_D3_v2 | Size of the firewall instances
 attached | true | Attach firewall instances to Aviatrix Gateways
-firewall_username | fwadmin | Default username for administrative account on the firewall. For Check Point firewalls it will always default to admin. Admin is not allowed for other image types. Should not contain special chars.
+firewall_username | fwadmin | Default username for administrative account on the firewall. **_For Check Point firewalls it will always default to admin_**. Admin is not allowed for other image types. Should not contain special chars.
 ha_gw | true | Set to false to deploy single Aviatrix gateway. When set to false, fw_amount is ignored and only a single NGFW instance is deployed.
 checkpoint_password | Aviatrix#1234 | Default initial password for Check Point, only required when using Check Point image
 insane_mode | false | Set to true to enable Aviatrix insane mode high-performance encryption 

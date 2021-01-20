@@ -20,12 +20,12 @@ output "aviatrix_firewall_instance" {
 
 output "azure_vnet_name" {
   description = "Azure VNET name"
-  value       = "${split(":", aviatrix_vpc.default.vpc_id)[0]}"
+  value       = split(":", aviatrix_vpc.default.vpc_id)[0]
 }
 
 output "azure_rg" {
   description = "Azure resource group"
-  value       = "${split(":", aviatrix_vpc.default.vpc_id)[1]}"
+  value       = split(":", aviatrix_vpc.default.vpc_id)[1]
 }
 
 output "firewall_instance_nic_names" {

@@ -47,7 +47,9 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = var.password
   management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : ""
-  bootstrap_bucket_name  = var.bootstrap_bucket_name
+  bootstrap_storage_name = var.bootstrap_storage_name
+  storage_access_key     = var.storage_access_key
+  file_share_folder      = var.file_share_folder
 }
 
 #Dual instance
@@ -63,7 +65,9 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = var.password
   management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : ""
-  bootstrap_bucket_name  = var.bootstrap_bucket_name
+  bootstrap_storage_name = var.bootstrap_storage_name
+  storage_access_key     = var.storage_access_key
+  file_share_folder      = var.file_share_folder
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_2" {
@@ -78,7 +82,9 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = var.password
   management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[3].cidr : ""
-  bootstrap_bucket_name  = var.bootstrap_bucket_name
+  bootstrap_storage_name = var.bootstrap_storage_name
+  storage_access_key     = var.storage_access_key
+  file_share_folder      = var.file_share_folder
 }
 
 resource "aviatrix_firenet" "firenet_single" {

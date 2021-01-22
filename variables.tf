@@ -161,8 +161,20 @@ variable "bgp_ecmp" {
   default     = false
 }
 
-variable "bootstrap_bucket_name" {
-  description = "The firewall bootstrap bucket name"
+variable "bootstrap_storage_name" {
+  description = "The firewall bootstrap_storage_name"
+  type        = string
+  default     = null
+}
+
+variable "storage_access_key" {
+  description = "The storage_access_key to access the storage account"
+  type        = string
+  default     = null
+}
+
+variable "file_share_folder" {
+  description = "The file_share_folder containing the bootstrap files"
   type        = string
   default     = null
 }

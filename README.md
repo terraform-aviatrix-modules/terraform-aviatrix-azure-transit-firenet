@@ -114,9 +114,10 @@ single_ip_snat | false | Enable single_ip mode Source NAT for this container
 enable_advertise_transit_cidr  | false | Switch to enable/disable advertise transit VPC network CIDR for a VGW connection
 bgp_polling_time  | 50 | BGP route polling time. Unit is in seconds
 bgp_ecmp  | false | Enable Equal Cost Multi Path (ECMP) routing for the next hop
-bootstrap_bucket_name | null | Bucketname to get bootstrap files from
+bootstrap_storage_name | null | Storagename to get bootstrap files from (PANW only)
+storage_access_key | null | Storage_access_key to access bootstrap storage (PANW only)
+file_share_folder | null | Name of the folder containing the bootstrap files (PANW only)
 
- 
 ### Outputs
 This module will return the following objects:
 

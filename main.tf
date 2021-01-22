@@ -45,7 +45,7 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
   egress_subnet          = aviatrix_vpc.default.subnets[0].cidr
   firenet_gw_name        = aviatrix_transit_gateway.default.gw_name
   username               = local.is_checkpoint ? "admin" : var.firewall_username
-  password               = local.is_checkpoint ? var.checkpoint_password : ""
+  password               = var.password
   management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : ""
 }
 
@@ -60,7 +60,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
   egress_subnet          = aviatrix_vpc.default.subnets[0].cidr
   firenet_gw_name        = aviatrix_transit_gateway.default.gw_name
   username               = local.is_checkpoint ? "admin" : var.firewall_username
-  password               = local.is_checkpoint ? var.checkpoint_password : ""
+  password               = var.password
   management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : ""
 }
 
@@ -74,7 +74,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   egress_subnet          = aviatrix_vpc.default.subnets[1].cidr
   firenet_gw_name        = "${aviatrix_transit_gateway.default.gw_name}-hagw"
   username               = local.is_checkpoint ? "admin" : var.firewall_username
-  password               = local.is_checkpoint ? var.checkpoint_password : ""
+  password               = var.password
   management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[3].cidr : ""
 }
 

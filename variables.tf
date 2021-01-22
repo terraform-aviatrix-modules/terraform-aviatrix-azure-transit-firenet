@@ -31,8 +31,8 @@ variable "fw_instance_size" {
   default     = "Standard_D3_v2"
 }
 
-variable "checkpoint_password" {
-  description = "Check Point firewall instance password"
+variable "password" {
+  description = "Firewall instance password"
   type        = string
   default     = "Aviatrix#1234"
 }

@@ -47,6 +47,7 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = var.password
   management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : ""
+  bootstrap_bucket_name  = var.bootstrap_bucket_name
 }
 
 #Dual instance
@@ -62,6 +63,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = var.password
   management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : ""
+  bootstrap_bucket_name  = var.bootstrap_bucket_name
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_2" {
@@ -76,6 +78,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = var.password
   management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[3].cidr : ""
+  bootstrap_bucket_name  = var.bootstrap_bucket_name
 }
 
 resource "aviatrix_firenet" "firenet_single" {

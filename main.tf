@@ -32,6 +32,7 @@ resource "aviatrix_transit_gateway" "default" {
   enable_advertise_transit_cidr    = var.enable_advertise_transit_cidr
   bgp_polling_time                 = var.bgp_polling_time
   bgp_ecmp                         = var.bgp_ecmp
+  local_as_number                  = var.local_as_number
 }
 
 #Single instance

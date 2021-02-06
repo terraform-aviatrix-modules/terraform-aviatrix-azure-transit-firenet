@@ -182,7 +182,6 @@ variable "file_share_folder" {
 variable "local_as_number" {
   description = "The gateways local AS number"
   type        = string
-  default     = null
 }
 
 locals {

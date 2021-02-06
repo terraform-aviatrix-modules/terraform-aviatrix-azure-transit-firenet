@@ -6,6 +6,7 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
+v3.0.1 | 0.13 | >=6.3 | >=0.2.18
 v3.0.0 | 0.13 | >=6.2 | >=2.17.2
 v2.0.2 | 0.12 | >=6.2 | >=2.17.1
 v2.0.1 | 0.12 | >=6.2 | >=2.17
@@ -71,6 +72,7 @@ account | The Azure access account on the Aviatrix controller, under which the c
 cidr | The IP CIDR wo be used to create the VNET
 firewall_image | String for the firewall image to use
 firewall_image_version | The firewall image version specific to the NGFW vendor image
+local_as_number | Transit GW AS Number
 
 Firewall images
 ```
@@ -117,7 +119,6 @@ bgp_ecmp  | false | Enable Equal Cost Multi Path (ECMP) routing for the next h
 bootstrap_storage_name | null | Storagename to get bootstrap files from (PANW only)
 storage_access_key | null | Storage_access_key to access bootstrap storage (PANW only)
 file_share_folder | null | Name of the folder containing the bootstrap files (PANW only)
-local_as_number | null | The gateways local AS number
 
 ### Outputs
 This module will return the following objects:

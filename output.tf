@@ -10,12 +10,12 @@ output "transit_gateway" {
 
 output "aviatrix_firenet" {
   description = "The Aviatrix firenet object with all of it's attributes"
-  value       = var.ha_gw ? aviatrix_firenet.firenet_ha[0] : aviatrix_firenet.firenet_single[0]
+  value       = aviatrix_firenet.firenet
 }
 
 output "aviatrix_firewall_instance" {
   description = "A list with the created firewall instances and their attributes"
-  value       = var.ha_gw ? [aviatrix_firewall_instance.firewall_instance_1[0], aviatrix_firewall_instance.firewall_instance_2[0]] : [aviatrix_firewall_instance.firewall_instance[0]]
+  value       = var.ha_gw ? [aviatrix_firewall_instance.firewall_instance_1[0], aviatrix_firewall_instance.firewall_instance_2[0]] : [aviatrix_firewall_instance.firewall_instance_1[0]]
 }
 
 output "azure_vnet_name" {
@@ -30,10 +30,10 @@ output "azure_rg" {
 
 output "firewall_instance_nic_names" {
   description = "The names of the NICs of the firewall(s)"
-  value       = var.ha_gw ? [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_1[0].egress_interface)), join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_2[0].egress_interface))] : [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance[0].egress_interface))]
+  value       = var.ha_gw ? [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_1[0].egress_interface)), join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_2[0].egress_interface))] : [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance[1].egress_interface))]
 }
 
 output "firewall_name" {
   description = "A list of the firewall names created"
-  value       = var.ha_gw ? [for name in aviatrix_firenet.firenet_ha[0].firewall_instance_association.*.instance_id : join("", regex("^(.*?):", name))] : [for name in aviatrix_firenet.firenet_single[0].firewall_instance_association.*.instance_id : join("", regex("^(.*?):", name))]
+  value       = [for name in aviatrix_firenet.firenet.firewall_instance_association.*.instance_id : join("", regex("^(.*?):", name))]
 }

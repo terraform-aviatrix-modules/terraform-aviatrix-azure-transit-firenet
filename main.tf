@@ -33,6 +33,7 @@ resource "aviatrix_transit_gateway" "default" {
   bgp_polling_time                 = var.bgp_polling_time
   bgp_ecmp                         = var.bgp_ecmp
   local_as_number                  = var.local_as_number
+  enable_bgp_over_lan              = var.enable_bgp_over_lan
 }
 
 #Single instance

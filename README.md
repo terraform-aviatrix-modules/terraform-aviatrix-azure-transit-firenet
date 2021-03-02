@@ -119,6 +119,8 @@ bgp_ecmp  | false | Enable Equal Cost Multi Path (ECMP) routing for the next h
 bootstrap_storage_name | null | Storagename to get bootstrap files from (PANW only)
 storage_access_key | null | Storage_access_key to access bootstrap storage (PANW only)
 file_share_folder | null | Name of the folder containing the bootstrap files (PANW only)
+local_as_number | | Changes the Aviatrix Transit Gateway ASN number before you setup Aviatrix Transit Gateway connection configurations.
+enable_bgp_over_lan | false | Enable BGp over LAN. Creates eth4 for integration with SDWAN for example
 
 ### Outputs
 This module will return the following objects:

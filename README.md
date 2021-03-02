@@ -72,7 +72,6 @@ account | The Azure access account on the Aviatrix controller, under which the c
 cidr | The IP CIDR wo be used to create the VNET
 firewall_image | String for the firewall image to use
 firewall_image_version | The firewall image version specific to the NGFW vendor image
-local_as_number | Transit GW AS Number
 
 Firewall images
 ```

@@ -31,8 +31,8 @@ variable "fw_instance_size" {
   default     = "Standard_D3_v2"
 }
 
-variable "checkpoint_password" {
-  description = "Check Point firewall instance password"
+variable "password" {
+  description = "Firewall instance password"
   type        = string
   default     = "Aviatrix#1234"
 }
@@ -157,6 +157,41 @@ variable "bgp_polling_time" {
 
 variable "bgp_ecmp" {
   description = "Enable Equal Cost Multi Path (ECMP) routing for the next hop"
+  type        = bool
+  default     = false
+}
+
+variable "bootstrap_storage_name" {
+  description = "The firewall bootstrap_storage_name"
+  type        = string
+  default     = null
+}
+
+variable "storage_access_key" {
+  description = "The storage_access_key to access the storage account"
+  type        = string
+  default     = null
+}
+
+variable "file_share_folder" {
+  description = "The file_share_folder containing the bootstrap files"
+  type        = string
+  default     = null
+}
+
+variable "local_as_number" {
+  description = "The gateways local AS number"
+  type        = string
+}
+
+variable "enable_bgp_over_lan" {
+  description = "Enable BGp over LAN. Creates eth4 for integration with SDWAN for example"
+  type        = bool
+  default     = false
+}
+
+variable "enable_egress_transit_firenet" {
+  description = "Set to true to enable egress on transit gw"
   type        = bool
   default     = false
 }

@@ -6,6 +6,7 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
+v3.0.1 | 0.13 | >=6.3 | >=0.2.18
 v3.0.0 | 0.13 | >=6.2 | >=2.17.2
 v2.0.2 | 0.12 | >=6.2 | >=2.17.1
 v2.0.1 | 0.12 | >=6.2 | >=2.17
@@ -71,6 +72,7 @@ account | The Azure access account on the Aviatrix controller, under which the c
 cidr | The IP CIDR wo be used to create the VNET
 firewall_image | String for the firewall image to use
 firewall_image_version | The firewall image version specific to the NGFW vendor image
+local_as_number | Transit GW AS Number
 
 Firewall images
 ```
@@ -95,7 +97,7 @@ fw_instance_size | Standard_D3_v2 | Size of the firewall instances
 attached | true | Attach firewall instances to Aviatrix Gateways
 firewall_username | fwadmin | Default username for administrative account on the firewall. **_For Check Point firewalls it will always default to admin_**. Admin is not allowed for other image types. Should not contain special chars.
 ha_gw | true | Set to false to deploy single Aviatrix gateway. When set to false, fw_amount is ignored and only a single NGFW instance is deployed.
-checkpoint_password | Aviatrix#1234 | Default initial password for Check Point, only required when using Check Point image
+password | Aviatrix#1234 | Default initial password for firewall instances
 insane_mode | false | Set to true to enable Aviatrix insane mode high-performance encryption 
 name | null | When this string is set, user defined name is applied to all infrastructure supporting n+1 sets within a same region or other customization
 egress_enabled | false | Set to true to enable egress inspection on the firewall instances
@@ -114,9 +116,13 @@ single_ip_snat | false | Enable single_ip mode Source NAT for this container
 enable_advertise_transit_cidr  | false | Switch to enable/disable advertise transit VPC network CIDR for a VGW connection
 bgp_polling_time  | 50 | BGP route polling time. Unit is in seconds
 bgp_ecmp  | false | Enable Equal Cost Multi Path (ECMP) routing for the next hop
+bootstrap_storage_name | null | Storagename to get bootstrap files from (PANW only)
+storage_access_key | null | Storage_access_key to access bootstrap storage (PANW only)
+file_share_folder | null | Name of the folder containing the bootstrap files (PANW only)
+local_as_number | | Changes the Aviatrix Transit Gateway ASN number before you setup Aviatrix Transit Gateway connection configurations.
+enable_bgp_over_lan | false | Enable BGp over LAN. Creates eth4 for integration with SDWAN for example
+enable_egress_transit_firenet | false | Set to true to enable egress on transit gw
 
-
- 
 ### Outputs
 This module will return the following objects:
 

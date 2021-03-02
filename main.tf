@@ -32,31 +32,13 @@ resource "aviatrix_transit_gateway" "default" {
   enable_advertise_transit_cidr    = var.enable_advertise_transit_cidr
   bgp_polling_time                 = var.bgp_polling_time
   bgp_ecmp                         = var.bgp_ecmp
+  enable_egress_transit_firenet    = var.enable_egress_transit_firenet
   local_as_number                  = var.local_as_number
   enable_bgp_over_lan              = var.enable_bgp_over_lan
 }
 
-#Single instance
-resource "aviatrix_firewall_instance" "firewall_instance" {
-  count                  = var.ha_gw ? 0 : 1
-  firewall_name          = "${local.name}-fw"
-  firewall_size          = var.fw_instance_size
-  vpc_id                 = aviatrix_vpc.default.vpc_id
-  firewall_image         = var.firewall_image
-  firewall_image_version = var.firewall_image_version
-  egress_subnet          = aviatrix_vpc.default.subnets[0].cidr
-  firenet_gw_name        = aviatrix_transit_gateway.default.gw_name
-  username               = local.is_checkpoint ? "admin" : var.firewall_username
-  password               = var.password
-  management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : ""
-  bootstrap_storage_name = var.bootstrap_storage_name
-  storage_access_key     = var.storage_access_key
-  file_share_folder      = var.file_share_folder
-}
-
-#Dual instance
 resource "aviatrix_firewall_instance" "firewall_instance_1" {
-  count                  = var.ha_gw ? 1 : 0
+  count                  = var.ha_gw ? 1 : 1 #Count could technically be removed, but left for when starting to support more than 2 NGFW instances
   firewall_name          = "${local.name}-fw1"
   firewall_size          = var.fw_instance_size
   vpc_id                 = aviatrix_vpc.default.vpc_id
@@ -89,46 +71,34 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   file_share_folder      = var.file_share_folder
 }
 
-resource "aviatrix_firenet" "firenet_single" {
-  count              = var.ha_gw ? 0 : 1
-  vpc_id             = aviatrix_vpc.default.vpc_id
-  inspection_enabled = var.inspection_enabled
-  egress_enabled     = var.egress_enabled
-  firewall_instance_association {
-    firenet_gw_name      = aviatrix_transit_gateway.default.gw_name
-    instance_id          = aviatrix_firewall_instance.firewall_instance[0].instance_id
-    vendor_type          = "Generic"
-    firewall_name        = aviatrix_firewall_instance.firewall_instance[0].firewall_name
-    lan_interface        = aviatrix_firewall_instance.firewall_instance[0].lan_interface
-    management_interface = null
-    egress_interface     = aviatrix_firewall_instance.firewall_instance[0].egress_interface
-    attached             = var.attached
-  }
+resource "aviatrix_firenet" "firenet" {
+  vpc_id                               = aviatrix_vpc.default.vpc_id
+  inspection_enabled                   = var.inspection_enabled
+  egress_enabled                       = var.egress_enabled
+  manage_firewall_instance_association = false
+  depends_on                           = [aviatrix_firewall_instance_association.firenet_instance1, aviatrix_firewall_instance_association.firenet_instance2, aviatrix_firewall_instance_association.firenet_instance]
 }
 
-resource "aviatrix_firenet" "firenet_ha" {
-  count              = var.ha_gw ? 1 : 0
-  vpc_id             = aviatrix_vpc.default.vpc_id
-  inspection_enabled = var.inspection_enabled
-  egress_enabled     = var.egress_enabled
-  firewall_instance_association {
-    firenet_gw_name      = aviatrix_transit_gateway.default.gw_name
-    instance_id          = aviatrix_firewall_instance.firewall_instance_1[0].instance_id
-    vendor_type          = "Generic"
-    firewall_name        = aviatrix_firewall_instance.firewall_instance_1[0].firewall_name
-    lan_interface        = aviatrix_firewall_instance.firewall_instance_1[0].lan_interface
-    management_interface = null
-    egress_interface     = aviatrix_firewall_instance.firewall_instance_1[0].egress_interface
-    attached             = var.attached
-  }
-  firewall_instance_association {
-    firenet_gw_name      = "${aviatrix_transit_gateway.default.gw_name}-hagw"
-    instance_id          = aviatrix_firewall_instance.firewall_instance_2[0].instance_id
-    vendor_type          = "Generic"
-    firewall_name        = aviatrix_firewall_instance.firewall_instance_2[0].firewall_name
-    lan_interface        = aviatrix_firewall_instance.firewall_instance_2[0].lan_interface
-    management_interface = null
-    egress_interface     = aviatrix_firewall_instance.firewall_instance_2[0].egress_interface
-    attached             = var.attached
-  }
+resource "aviatrix_firewall_instance_association" "firenet_instance1" {
+  count                = var.ha_gw ? 1 : 1 #Count could technically be removed, but left for when starting to support more than 2 NGFW instances
+  vpc_id               = aviatrix_vpc.default.vpc_id
+  firenet_gw_name      = aviatrix_transit_gateway.default.gw_name
+  instance_id          = aviatrix_firewall_instance.firewall_instance_1[count.index].instance_id
+  firewall_name        = aviatrix_firewall_instance.firewall_instance_1[count.index].firewall_name
+  lan_interface        = aviatrix_firewall_instance.firewall_instance_1[count.index].lan_interface
+  management_interface = aviatrix_firewall_instance.firewall_instance_1[count.index].management_interface
+  egress_interface     = aviatrix_firewall_instance.firewall_instance_1[count.index].egress_interface
+  attached             = var.attached
+}
+
+resource "aviatrix_firewall_instance_association" "firenet_instance2" {
+  count                = var.ha_gw ? 1 : 0
+  vpc_id               = aviatrix_vpc.default.vpc_id
+  firenet_gw_name      = "${aviatrix_transit_gateway.default.gw_name}-hagw"
+  instance_id          = aviatrix_firewall_instance.firewall_instance_2[count.index].instance_id
+  firewall_name        = aviatrix_firewall_instance.firewall_instance_2[count.index].firewall_name
+  lan_interface        = aviatrix_firewall_instance.firewall_instance_2[count.index].lan_interface
+  management_interface = aviatrix_firewall_instance.firewall_instance_2[count.index].management_interface
+  egress_interface     = aviatrix_firewall_instance.firewall_instance_2[count.index].egress_interface
+  attached             = var.attached
 }

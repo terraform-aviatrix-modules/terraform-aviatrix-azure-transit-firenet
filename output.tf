@@ -30,7 +30,7 @@ output "azure_rg" {
 
 output "firewall_instance_nic_names" {
   description = "The names of the NICs of the firewall(s)"
-  value       = var.ha_gw ? [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_1[0].egress_interface)), join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_2[0].egress_interface))] : [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance[1].egress_interface))]
+  value       = var.ha_gw ? [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_1[0].egress_interface)), join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_2[0].egress_interface))] : [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_1[0].egress_interface))]
 }
 
 output "firewall_name" {

@@ -101,10 +101,10 @@ resource "aviatrix_firewall_instance_association" "firenet_instance" {
   vpc_id               = aviatrix_vpc.default.vpc_id
   firenet_gw_name      = aviatrix_transit_gateway.default.gw_name
   instance_id          = aviatrix_firewall_instance.firewall_instance[0].instance_id
-  firewall_name        = aviatrix_firewall_instance[0].firewall_instance[0].firewall_name
-  lan_interface        = aviatrix_firewall_instance[0].firewall_instance[0].lan_interface
-  management_interface = aviatrix_firewall_instance[0].firewall_instance[0].management_interface
-  egress_interface     = aviatrix_firewall_instance[0].firewall_instance[0].egress_interface
+  firewall_name        = aviatrix_firewall_instance.firewall_instance[0].firewall_name
+  lan_interface        = aviatrix_firewall_instance.firewall_instance[0].lan_interface
+  management_interface = aviatrix_firewall_instance.firewall_instance[0].management_interface
+  egress_interface     = aviatrix_firewall_instance.firewall_instance[0].egress_interface
   attached             = var.attached
 }
 

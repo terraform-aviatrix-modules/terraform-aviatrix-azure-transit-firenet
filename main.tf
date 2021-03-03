@@ -38,7 +38,7 @@ resource "aviatrix_transit_gateway" "default" {
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_1" {
-  count                  = var.ha_gw ? 1 : 1 #Count could technically be removed, but left for when starting to support more than 2 NGFW instances
+  count                  = 1 #Count could technically be removed, but left for when starting to support more than 2 NGFW instances
   firewall_name          = "${local.name}-fw1"
   firewall_size          = var.fw_instance_size
   vpc_id                 = aviatrix_vpc.default.vpc_id
@@ -80,7 +80,7 @@ resource "aviatrix_firenet" "firenet" {
 }
 
 resource "aviatrix_firewall_instance_association" "firenet_instance1" {
-  count                = var.ha_gw ? 1 : 1 #Count could technically be removed, but left for when starting to support more than 2 NGFW instances
+  count                = 1 #Count could technically be removed, but left for when starting to support more than 2 NGFW instances
   vpc_id               = aviatrix_vpc.default.vpc_id
   firenet_gw_name      = aviatrix_transit_gateway.default.gw_name
   instance_id          = aviatrix_firewall_instance.firewall_instance_1[count.index].instance_id

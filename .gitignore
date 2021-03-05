@@ -5,6 +5,8 @@
 *.tfstate
 *.tfstate.*
 
+*.hcl
+
 #Backend file
 backend.tf
 

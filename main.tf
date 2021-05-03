@@ -54,6 +54,7 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
   bootstrap_storage_name = var.bootstrap_storage_name
   storage_access_key     = var.storage_access_key
   file_share_folder      = var.file_share_folder
+  zone                   = var.az_support ? var.az1 : null
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_1" {
@@ -71,6 +72,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
   bootstrap_storage_name = var.bootstrap_storage_name
   storage_access_key     = var.storage_access_key
   file_share_folder      = var.file_share_folder
+  zone                   = var.az_support ? var.az1 : null
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_2" {
@@ -88,6 +90,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   bootstrap_storage_name = var.bootstrap_storage_name
   storage_access_key     = var.storage_access_key
   file_share_folder      = var.file_share_folder
+  ha_zone                = var.az_support ? var.az2 : null
 }
 
 resource "aviatrix_firenet" "firenet" {

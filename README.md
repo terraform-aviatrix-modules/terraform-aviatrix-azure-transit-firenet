@@ -6,14 +6,11 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
+v3.0.4 | 0.13 | >=6.3 | >=0.2.18
+v3.0.3 | 0.13 | >=6.3 | >=0.2.18
 v3.0.2 | 0.13 | >=6.3 | >=0.2.18
 v3.0.1 | 0.13 | >=6.3 | >=0.2.18
 v3.0.0 | 0.13 | >=6.2 | >=2.17.2
-v2.0.2 | 0.12 | >=6.2 | >=2.17.1
-v2.0.1 | 0.12 | >=6.2 | >=2.17
-v2.0.0 | 0.12 | >=6.2 | >=2.17
-v1.0.2 | 0.12 | 6.1 | 2.16, 2.16.1
-v1.0.2 | 0.12 | 6.0 | 2.15, 2.15.1
 
 **_Information on older releases can be found in respective release notes._*
 
@@ -28,7 +25,7 @@ Examples shown below are specific to each vendor.
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.2"
+  version                = "3.0.4"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -40,7 +37,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.2"
+  version                = "3.0.4"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -54,7 +51,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.2"
+  version                = "3.0.4"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"

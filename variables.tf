@@ -16,7 +16,7 @@ variable "account" {
 variable "instance_size" {
   description = "Azure Instance size for the Aviatrix gateways"
   type        = string
-  default     = "Standard_B4ms"
+  default     = "Standard_B2ms"
 }
 
 variable "insane_instance_size" {

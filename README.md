@@ -120,8 +120,8 @@ local_as_number | | Changes the Aviatrix Transit Gateway ASN number before you s
 enable_bgp_over_lan | false | Enable BGp over LAN. Creates eth4 for integration with SDWAN for example
 enable_egress_transit_firenet | false | Set to true to enable egress on transit gw
 az_support | false | Set to true if the Azure region supports AZ's
-az1 | az-1 | AZ Zone to be used for GW deployment.
-az2 | az-2 | AZ Zone to be used for HAGW deployment.
+az1 | az-1 | AZ Zone to be used for Transit GW + NGFW deployment.
+az2 | az-2 | AZ Zone to be used for HA Transit GW + HA NGFW deployment.
 
 ### Outputs
 This module will return the following objects:

@@ -197,6 +197,24 @@ variable "enable_egress_transit_firenet" {
   default     = false
 }
 
+variable "az_support" {
+  description = "Set to true if the Azure region supports AZ's"
+  type        = bool
+  default     = false
+}
+
+variable "az1" {
+  description = "AZ Zone to be used for GW deployment."
+  type        = string
+  default     = "az-1"
+}
+
+variable "az2" {
+  description = "AZ Zone to be used for HAGW deployment."
+  type        = string
+  default     = "az-2"
+}
+
 locals {
   is_checkpoint = length(regexall("check", lower(var.firewall_image))) > 0 #Check if fw image contains checkpoint. Needs special handling for the username/password
   is_palo       = length(regexall("palo", lower(var.firewall_image))) > 0  #Check if fw image contains palo. Needs special handling for management_subnet (CP & Fortigate null)
@@ -209,4 +227,5 @@ locals {
   netnum        = pow(2, local.newbits)
   subnet        = var.insane_mode ? cidrsubnet(var.cidr, local.newbits, local.netnum - 2) : aviatrix_vpc.default.public_subnets[2].cidr
   ha_subnet     = var.insane_mode ? cidrsubnet(var.cidr, local.newbits, local.netnum - 1) : aviatrix_vpc.default.public_subnets[3].cidr
+  single_az_ha  = var.az_support ? (ha_gw ? false : var.single_az_ha) : var.single_az_ha #Disable single AZ HA when az support and HA are both enabled.
 }

@@ -27,7 +27,7 @@ resource "aviatrix_transit_gateway" "default" {
   bgp_manual_spoke_advertise_cidrs = var.bgp_manual_spoke_advertise_cidrs
   enable_learned_cidrs_approval    = var.learned_cidr_approval
   enable_segmentation              = var.enable_segmentation
-  single_az_ha                     = var.single_az_ha
+  single_az_ha                     = var.single_az_ha #local.single_az_ha 
   single_ip_snat                   = var.single_ip_snat
   enable_advertise_transit_cidr    = var.enable_advertise_transit_cidr
   bgp_polling_time                 = var.bgp_polling_time
@@ -35,6 +35,8 @@ resource "aviatrix_transit_gateway" "default" {
   enable_egress_transit_firenet    = var.enable_egress_transit_firenet
   local_as_number                  = var.local_as_number
   enable_bgp_over_lan              = var.enable_bgp_over_lan
+  zone                             = var.az_support ? var.az1 : null
+  ha_zone                          = var.ha_gw ? (var.az_support ? var.az2 : null) : null
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance" {

@@ -119,6 +119,9 @@ file_share_folder | null | Name of the folder containing the bootstrap files (PA
 local_as_number | | Changes the Aviatrix Transit Gateway ASN number before you setup Aviatrix Transit Gateway connection configurations.
 enable_bgp_over_lan | false | Enable BGp over LAN. Creates eth4 for integration with SDWAN for example
 enable_egress_transit_firenet | false | Set to true to enable egress on transit gw
+az_support | false | Set to true if the Azure region supports AZ's
+az1 | az-1 | AZ Zone to be used for GW deployment.
+az2 | az-2 | AZ Zone to be used for HAGW deployment.
 
 ### Outputs
 This module will return the following objects:
@@ -133,11 +136,3 @@ azure_rg | The name of the Azure resource group that the Aviatrix infrastructure
 azure_vnet_name | The name of the Azure vnet created
 firewall_instance_nic_names | The names of the NICs of the firewall(s)
 fw_name | A list of the firewall names created
-
-
-#### Azure Infrastructure Created
-
-The module automates creation of 44 infrastructure components in Azure.
-
-<img src="https://github.com/terraform-aviatrix-modules/terraform-aviatrix-azure-transit-firenet/blob/master/img/azure-firenet-module-infr.png?raw=true">
-

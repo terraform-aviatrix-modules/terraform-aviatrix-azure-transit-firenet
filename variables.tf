@@ -227,5 +227,4 @@ locals {
   netnum        = pow(2, local.newbits)
   subnet        = var.insane_mode ? cidrsubnet(var.cidr, local.newbits, local.netnum - 2) : aviatrix_vpc.default.public_subnets[2].cidr
   ha_subnet     = var.insane_mode ? cidrsubnet(var.cidr, local.newbits, local.netnum - 1) : aviatrix_vpc.default.public_subnets[3].cidr
-  single_az_ha  = var.az_support ? (var.ha_gw ? false : var.single_az_ha) : var.single_az_ha #Disable single AZ HA when az support and HA are both enabled.
 }

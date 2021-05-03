@@ -90,7 +90,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   bootstrap_storage_name = var.bootstrap_storage_name
   storage_access_key     = var.storage_access_key
   file_share_folder      = var.file_share_folder
-  ha_zone                = var.az_support ? var.az2 : null
+  zone                   = var.az_support ? var.az2 : null
 }
 
 resource "aviatrix_firenet" "firenet" {

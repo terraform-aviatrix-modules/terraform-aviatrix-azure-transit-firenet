@@ -35,6 +35,8 @@ resource "aviatrix_transit_gateway" "default" {
   enable_egress_transit_firenet    = var.enable_egress_transit_firenet
   local_as_number                  = var.local_as_number
   enable_bgp_over_lan              = var.enable_bgp_over_lan
+  zone                             = var.az_support ? var.az1 : null
+  ha_zone                          = var.ha_gw ? (var.az_support ? var.az2 : null) : null
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance" {
@@ -52,6 +54,7 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
   bootstrap_storage_name = var.bootstrap_storage_name
   storage_access_key     = var.storage_access_key
   file_share_folder      = var.file_share_folder
+  zone                   = var.az_support ? var.az1 : null
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_1" {
@@ -69,6 +72,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
   bootstrap_storage_name = var.bootstrap_storage_name
   storage_access_key     = var.storage_access_key
   file_share_folder      = var.file_share_folder
+  zone                   = var.az_support ? var.az1 : null
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_2" {
@@ -86,6 +90,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   bootstrap_storage_name = var.bootstrap_storage_name
   storage_access_key     = var.storage_access_key
   file_share_folder      = var.file_share_folder
+  zone                   = var.az_support ? var.az2 : null
 }
 
 resource "aviatrix_firenet" "firenet" {
@@ -93,7 +98,11 @@ resource "aviatrix_firenet" "firenet" {
   inspection_enabled                   = var.inspection_enabled
   egress_enabled                       = var.egress_enabled
   manage_firewall_instance_association = false
-  depends_on                           = [aviatrix_firewall_instance_association.firenet_instance, aviatrix_firewall_instance_association.firenet_instance1, aviatrix_firewall_instance_association.firenet_instance2]
+  depends_on = [
+    aviatrix_firewall_instance_association.firenet_instance,
+    aviatrix_firewall_instance_association.firenet_instance1,
+    aviatrix_firewall_instance_association.firenet_instance2
+  ]
 }
 
 resource "aviatrix_firewall_instance_association" "firenet_instance" {

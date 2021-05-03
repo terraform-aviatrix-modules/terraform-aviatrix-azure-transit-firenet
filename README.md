@@ -6,14 +6,11 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
+v3.0.4 | 0.13 | >=6.3 | >=0.2.18
+v3.0.3 | 0.13 | >=6.3 | >=0.2.18
 v3.0.2 | 0.13 | >=6.3 | >=0.2.18
 v3.0.1 | 0.13 | >=6.3 | >=0.2.18
 v3.0.0 | 0.13 | >=6.2 | >=2.17.2
-v2.0.2 | 0.12 | >=6.2 | >=2.17.1
-v2.0.1 | 0.12 | >=6.2 | >=2.17
-v2.0.0 | 0.12 | >=6.2 | >=2.17
-v1.0.2 | 0.12 | 6.1 | 2.16, 2.16.1
-v1.0.2 | 0.12 | 6.0 | 2.15, 2.15.1
 
 **_Information on older releases can be found in respective release notes._*
 
@@ -28,7 +25,7 @@ Examples shown below are specific to each vendor.
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.2"
+  version                = "3.0.4"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -40,7 +37,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.2"
+  version                = "3.0.4"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -54,7 +51,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.2"
+  version                = "3.0.4"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -122,6 +119,9 @@ file_share_folder | null | Name of the folder containing the bootstrap files (PA
 local_as_number | | Changes the Aviatrix Transit Gateway ASN number before you setup Aviatrix Transit Gateway connection configurations.
 enable_bgp_over_lan | false | Enable BGp over LAN. Creates eth4 for integration with SDWAN for example
 enable_egress_transit_firenet | false | Set to true to enable egress on transit gw
+az_support | true | Set to false if the Azure region does not support Availability Zones.
+az1 | az-1 | AZ Zone to be used for Transit GW + NGFW deployment.
+az2 | az-2 | AZ Zone to be used for HA Transit GW + HA NGFW deployment.
 
 ### Outputs
 This module will return the following objects:
@@ -136,11 +136,3 @@ azure_rg | The name of the Azure resource group that the Aviatrix infrastructure
 azure_vnet_name | The name of the Azure vnet created
 firewall_instance_nic_names | The names of the NICs of the firewall(s)
 fw_name | A list of the firewall names created
-
-
-#### Azure Infrastructure Created
-
-The module automates creation of 44 infrastructure components in Azure.
-
-<img src="https://github.com/terraform-aviatrix-modules/terraform-aviatrix-azure-transit-firenet/blob/master/img/azure-firenet-module-infr.png?raw=true">
-

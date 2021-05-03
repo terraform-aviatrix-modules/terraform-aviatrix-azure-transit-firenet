@@ -200,7 +200,7 @@ variable "enable_egress_transit_firenet" {
 variable "az_support" {
   description = "Set to true if the Azure region supports AZ's"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "az1" {

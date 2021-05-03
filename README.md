@@ -119,7 +119,7 @@ file_share_folder | null | Name of the folder containing the bootstrap files (PA
 local_as_number | | Changes the Aviatrix Transit Gateway ASN number before you setup Aviatrix Transit Gateway connection configurations.
 enable_bgp_over_lan | false | Enable BGp over LAN. Creates eth4 for integration with SDWAN for example
 enable_egress_transit_firenet | false | Set to true to enable egress on transit gw
-az_support | false | Set to true if the Azure region supports AZ's
+az_support | true | Set to false if the Azure region does not support Availability Zones.
 az1 | az-1 | AZ Zone to be used for Transit GW + NGFW deployment.
 az2 | az-2 | AZ Zone to be used for HA Transit GW + HA NGFW deployment.
 

@@ -89,7 +89,7 @@ The following variables are optional:
 
 key | default | value
 :--- | :--- | :---
-instance_size | Standard_B2ms | Size of the transit gateway instances. **Insane mode requires a minimum Standard_D3_v2 instance size**
+instance_size | Standard_B4ms | Size of the transit gateway instances. **Insane mode requires a minimum Standard_D3_v2 instance size**
 fw_instance_size | Standard_D3_v2 | Size of the firewall instances
 attached | true | Attach firewall instances to Aviatrix Gateways
 firewall_username | fwadmin | Default username for administrative account on the firewall. **_For Check Point firewalls it will always default to admin_**. Admin is not allowed for other image types. Should not contain special chars.

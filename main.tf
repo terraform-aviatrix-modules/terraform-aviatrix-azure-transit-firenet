@@ -83,7 +83,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   firewall_image         = var.firewall_image
   firewall_image_version = var.firewall_image_version
   egress_subnet          = aviatrix_vpc.default.subnets[1].cidr
-  firenet_gw_name        = "${aviatrix_transit_gateway.default.gw_name}-hagw"
+  firenet_gw_name        = aviatrix_transit_gateway.default.ha_gw_name
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = var.password
   management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[3].cidr : ""
@@ -132,7 +132,7 @@ resource "aviatrix_firewall_instance_association" "firenet_instance1" {
 resource "aviatrix_firewall_instance_association" "firenet_instance2" {
   count                = var.ha_gw ? 1 : 0
   vpc_id               = aviatrix_vpc.default.vpc_id
-  firenet_gw_name      = "${aviatrix_transit_gateway.default.gw_name}-hagw"
+  firenet_gw_name      = aviatrix_transit_gateway.default.ha_gw_name
   instance_id          = aviatrix_firewall_instance.firewall_instance_2[0].instance_id
   firewall_name        = aviatrix_firewall_instance.firewall_instance_2[0].firewall_name
   lan_interface        = aviatrix_firewall_instance.firewall_instance_2[0].lan_interface

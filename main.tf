@@ -7,6 +7,7 @@ resource "aviatrix_vpc" "default" {
   account_name         = var.account
   aviatrix_firenet_vpc = true
   aviatrix_transit_vpc = false
+  resource_group       = var.resource_group
 }
 
 #Transit GW
@@ -37,6 +38,9 @@ resource "aviatrix_transit_gateway" "default" {
   enable_bgp_over_lan              = var.enable_bgp_over_lan
   zone                             = var.az_support ? var.az1 : null
   ha_zone                          = var.ha_gw ? (var.az_support ? var.az2 : null) : null
+  tunnel_detection_time            = var.tunnel_detection_time
+  tags                             = var.tags
+  enable_multi_tier_transit        = var.enable_multi_tier_transit
 }
 
 #Firewall instances
@@ -56,6 +60,7 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
   storage_access_key     = var.storage_access_key_1
   file_share_folder      = var.file_share_folder_1
   zone                   = var.az_support ? var.az1 : null
+  firewall_image_id      = var.firewall_image_id
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_1" {
@@ -74,6 +79,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
   storage_access_key     = var.storage_access_key_1
   file_share_folder      = var.file_share_folder_1
   zone                   = var.az_support ? var.az1 : null
+  firewall_image_id      = var.firewall_image_id
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_2" {
@@ -92,6 +98,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   storage_access_key     = local.storage_access_key_2
   file_share_folder      = local.file_share_folder_2
   zone                   = var.az_support ? var.az2 : null
+  firewall_image_id      = var.firewall_image_id
 }
 
 #FQDN Egress filtering instances
@@ -141,6 +148,7 @@ resource "aviatrix_firenet" "firenet" {
   inspection_enabled                   = local.is_aviatrix ? false : var.inspection_enabled #Always switch to false if Aviatrix FQDN egress.
   egress_enabled                       = local.is_aviatrix ? true : var.egress_enabled      #Always switch to true if Aviatrix FQDN egress.
   manage_firewall_instance_association = false
+  egress_static_cidrs                  = var.egress_static_cidrs
   depends_on = [
     aviatrix_firewall_instance_association.firenet_instance,
     aviatrix_firewall_instance_association.firenet_instance1,

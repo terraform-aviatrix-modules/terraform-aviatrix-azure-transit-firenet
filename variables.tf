@@ -234,6 +234,42 @@ variable "az2" {
   default     = "az-2"
 }
 
+variable "resource_group" {
+  description = "Provide the name of an existing resource group."
+  type        = string
+  default     = null
+}
+
+variable "tunnel_detection_time" {
+  description = "The IPsec tunnel down detection time for the Spoke Gateway in seconds. Must be a number in the range [20-600]."
+  type        = number
+  default     = null
+}
+
+variable "tags" {
+  description = "Map of tags to assign to the gateway."
+  type        = map(string)
+  default     = null
+}
+
+variable "enable_multi_tier_transit" {
+  description = "Set to true to enable multi tier transit."
+  type        = bool
+  default     = false
+}
+
+variable "egress_static_cidrs" {
+  description = "List of egress static CIDRs."
+  type        = list(string)
+  default     = []
+}
+
+variable "firewall_image_id" {
+  description = "Firewall image ID."
+  type        = string
+  default     = null
+}
+
 locals {
   is_checkpoint            = length(regexall("check", lower(var.firewall_image))) > 0    #Check if fw image contains checkpoint. Needs special handling for the username/password
   is_palo                  = length(regexall("palo", lower(var.firewall_image))) > 0     #Check if fw image contains palo. Needs special handling for management_subnet (CP & Fortigate null)

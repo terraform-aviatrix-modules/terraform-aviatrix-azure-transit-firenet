@@ -15,7 +15,7 @@ output "aviatrix_firenet" {
 
 output "aviatrix_firewall_instance" {
   description = "A list with the created firewall instances and their attributes"
-  value       = var.ha_gw ? [aviatrix_firewall_instance.firewall_instance_1[0], aviatrix_firewall_instance.firewall_instance_2[0]] : [aviatrix_firewall_instance.firewall_instance[0]]
+  value       = var.ha_gw ? (local.is_aviatrix ? [aviatrix_gateway.egress_instance_1[0], aviatrix_gateway.egress_instance_2[0]] : [aviatrix_firewall_instance.firewall_instance_1[0], aviatrix_firewall_instance.firewall_instance_2[0]]) : (local.is_aviatrix ? [aviatrix_gateway.egress_instance[0]] : [aviatrix_firewall_instance.firewall_instance[0]])
 }
 
 output "azure_vnet_name" {
@@ -30,7 +30,7 @@ output "azure_rg" {
 
 output "firewall_instance_nic_names" {
   description = "The names of the NICs of the firewall(s)"
-  value       = var.ha_gw ? [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_1[0].egress_interface)), join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_2[0].egress_interface))] : [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance[0].egress_interface))]
+  value       = local.is_aviatrix ? null : (var.ha_gw ? [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_1[0].egress_interface)), join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance_2[0].egress_interface))] : [join("", regex("([^\\/]+$)", aviatrix_firewall_instance.firewall_instance[0].egress_interface))])
 }
 
 output "firewall_name" {

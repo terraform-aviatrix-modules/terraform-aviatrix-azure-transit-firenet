@@ -6,6 +6,7 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
+v3.0.5 | 0.13 | >=6.3 | >=0.2.18
 v3.0.4 | 0.13 | >=6.3 | >=0.2.18
 v3.0.3 | 0.13 | >=6.3 | >=0.2.18
 v3.0.2 | 0.13 | >=6.3 | >=0.2.18
@@ -25,7 +26,7 @@ Examples shown below are specific to each vendor.
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.4"
+  version                = "3.0.5"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -37,7 +38,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.4"
+  version                = "3.0.5"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -51,7 +52,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.4"
+  version                = "3.0.5"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -69,13 +70,14 @@ region | Azure region to deploy the transit VNET in
 account | The Azure access account on the Aviatrix controller, under which the controller will deploy this VNET
 cidr | The IP CIDR wo be used to create the VNET
 firewall_image | String for the firewall image to use
-firewall_image_version | The firewall image version specific to the NGFW vendor image
+firewall_image_version | The firewall image version specific to the NGFW vendor image (Not required when choosing Aviatrix FQDN egress)
 
 Firewall images
 ```
 Palo Alto Networks VM-Series Next-Generation Firewall Bundle 1 
 Check Point CloudGuard IaaS Single Gateway R80.40 - Bring Your Own License
 Fortinet FortiGate (BYOL) Next-Generation Firewall
+Aviatrix FQDN Egress Filtering
 ```
 
 Firewall image versions tested
@@ -113,9 +115,12 @@ single_ip_snat | false | Enable single_ip mode Source NAT for this container
 enable_advertise_transit_cidr  | false | Switch to enable/disable advertise transit VPC network CIDR for a VGW connection
 bgp_polling_time  | 50 | BGP route polling time. Unit is in seconds
 bgp_ecmp  | false | Enable Equal Cost Multi Path (ECMP) routing for the next hop
-bootstrap_storage_name | null | Storagename to get bootstrap files from (PANW only)
-storage_access_key | null | Storage_access_key to access bootstrap storage (PANW only)
-file_share_folder | null | Name of the folder containing the bootstrap files (PANW only)
+bootstrap_storage_name_1 | null | Storagename to get bootstrap files from (PANW only). (If bootstrap_storage_name_2 is not set, this will used for all NGFW instances)
+storage_access_key_1 | null | Storage_access_key to access bootstrap storage (PANW only) (If storage_access_key_2 is not set, this will used for all NGFW instances)
+file_share_folder_1 | null | Name of the folder containing the bootstrap files (PANW only) (If file_share_folder_2 is not set, this will used for all NGFW instances)
+bootstrap_storage_name_2 | null | Storagename to get bootstrap files from (PANW only) (Only used when HA FW instance is deployed)
+storage_access_key_2 | null | Storage_access_key to access bootstrap storage (PANW only) (Only used when HA FW instance is deployed)
+file_share_folder_2 | null | Name of the folder containing the bootstrap files (PANW only) (Only used when HA FW instance is deployed)
 local_as_number | | Changes the Aviatrix Transit Gateway ASN number before you setup Aviatrix Transit Gateway connection configurations.
 enable_bgp_over_lan | false | Enable BGp over LAN. Creates eth4 for integration with SDWAN for example
 enable_egress_transit_firenet | false | Set to true to enable egress on transit gw

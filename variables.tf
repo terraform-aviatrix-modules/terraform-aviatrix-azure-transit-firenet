@@ -69,6 +69,7 @@ variable "firewall_image" {
 variable "firewall_image_version" {
   description = "The firewall image version specific to the NGFW vendor image"
   type        = string
+  default     = ""
 }
 
 variable "firewall_username" {

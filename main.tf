@@ -69,7 +69,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
   firenet_gw_name        = aviatrix_transit_gateway.default.gw_name
   username               = local.is_checkpoint ? "admin" : var.firewall_username
   password               = var.password
-  management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : mull
+  management_subnet      = local.is_palo ? aviatrix_vpc.default.subnets[2].cidr : null
   bootstrap_storage_name = var.bootstrap_storage_name_1
   storage_access_key     = var.storage_access_key_1
   file_share_folder      = var.file_share_folder_1
@@ -138,8 +138,8 @@ resource "aviatrix_gateway" "egress_instance_2" {
 
 resource "aviatrix_firenet" "firenet" {
   vpc_id                               = aviatrix_vpc.default.vpc_id
-  inspection_enabled                   = var.inspection_enabled
-  egress_enabled                       = var.egress_enabled
+  inspection_enabled                   = local.is_aviatrix ? false : var.inspection_enabled #Always switch to false if Aviatrix FQDN egress.
+  egress_enabled                       = local.is_aviatrix ? true : var.egress_enabled      #Always switch to true if Aviatrix FQDN egress.
   manage_firewall_instance_association = false
   depends_on = [
     aviatrix_firewall_instance_association.firenet_instance,

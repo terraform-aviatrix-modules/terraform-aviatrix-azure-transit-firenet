@@ -6,6 +6,7 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
+v4.0.0 | 0.13 + 0.14 | >=6.4 | >=0.2.19
 v3.0.5 | 0.13 | >=6.3 | >=0.2.18
 v3.0.4 | 0.13 | >=6.3 | >=0.2.18
 v3.0.3 | 0.13 | >=6.3 | >=0.2.18
@@ -26,7 +27,7 @@ Examples shown below are specific to each vendor.
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.5"
+  version                = "4.0.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -38,7 +39,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.5"
+  version                = "4.0.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -52,7 +53,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "3.0.5"
+  version                = "4.0.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -127,6 +128,12 @@ enable_egress_transit_firenet | false | Set to true to enable egress on transit 
 az_support | true | Set to false if the Azure region does not support Availability Zones.
 az1 | az-1 | AZ Zone to be used for Transit GW + NGFW deployment.
 az2 | az-2 | AZ Zone to be used for HA Transit GW + HA NGFW deployment.
+resource_group | null | Provide the name of an existing resource group.
+tunnel_detection_time | null | The IPsec tunnel down detection time for the Spoke Gateway in seconds. Must be a number in the range [20-600]. Default is 60.
+tags | null | Map of tags to assign to the gateway.
+enable_multi_tier_transit |	false |	Switch to enable multi tier transit
+egress_static_cidrs | [] | List of egress static CIDRs. Egress is required to be enabled. Example: ["1.171.15.184/32", "1.171.15.185/32"].
+firewall_image_id | | Custom Firewall image ID.
 
 ### Outputs
 This module will return the following objects:

@@ -161,22 +161,40 @@ variable "bgp_ecmp" {
   default     = false
 }
 
-variable "bootstrap_storage_name" {
+variable "bootstrap_storage_name_1" {
   description = "The firewall bootstrap_storage_name"
   type        = string
   default     = null
 }
 
-variable "storage_access_key" {
+variable "storage_access_key_1" {
   description = "The storage_access_key to access the storage account"
   type        = string
   default     = null
 }
 
-variable "file_share_folder" {
+variable "file_share_folder_1" {
   description = "The file_share_folder containing the bootstrap files"
   type        = string
   default     = null
+}
+
+variable "bootstrap_storage_name_2" {
+  description = "The firewall bootstrap_storage_name"
+  type        = string
+  default     = ""
+}
+
+variable "storage_access_key_2" {
+  description = "The storage_access_key to access the storage account"
+  type        = string
+  default     = ""
+}
+
+variable "file_share_folder_2" {
+  description = "The file_share_folder containing the bootstrap files"
+  type        = string
+  default     = ""
 }
 
 variable "local_as_number" {
@@ -216,15 +234,19 @@ variable "az2" {
 }
 
 locals {
-  is_checkpoint = length(regexall("check", lower(var.firewall_image))) > 0 #Check if fw image contains checkpoint. Needs special handling for the username/password
-  is_palo       = length(regexall("palo", lower(var.firewall_image))) > 0  #Check if fw image contains palo. Needs special handling for management_subnet (CP & Fortigate null)
-  lower_name    = length(var.name) > 0 ? replace(lower(var.name), " ", "-") : replace(lower(var.region), " ", "-")
-  prefix        = var.prefix ? "avx-" : ""
-  suffix        = var.suffix ? "-firenet" : ""
-  name          = "${local.prefix}${local.lower_name}${local.suffix}"
-  cidrbits      = tonumber(split("/", var.cidr)[1])
-  newbits       = 26 - local.cidrbits
-  netnum        = pow(2, local.newbits)
-  subnet        = var.insane_mode ? cidrsubnet(var.cidr, local.newbits, local.netnum - 2) : aviatrix_vpc.default.public_subnets[2].cidr
-  ha_subnet     = var.insane_mode ? cidrsubnet(var.cidr, local.newbits, local.netnum - 1) : aviatrix_vpc.default.public_subnets[3].cidr
+  is_checkpoint            = length(regexall("check", lower(var.firewall_image))) > 0    #Check if fw image contains checkpoint. Needs special handling for the username/password
+  is_palo                  = length(regexall("palo", lower(var.firewall_image))) > 0     #Check if fw image contains palo. Needs special handling for management_subnet (CP & Fortigate null)
+  is_aviatrix              = length(regexall("aviatrix", lower(var.firewall_image))) > 0 #Check if fw image is Aviatrix FQDN Egress
+  lower_name               = length(var.name) > 0 ? replace(lower(var.name), " ", "-") : replace(lower(var.region), " ", "-")
+  prefix                   = var.prefix ? "avx-" : ""
+  suffix                   = var.suffix ? "-firenet" : ""
+  name                     = "${local.prefix}${local.lower_name}${local.suffix}"
+  cidrbits                 = tonumber(split("/", var.cidr)[1])
+  newbits                  = 26 - local.cidrbits
+  netnum                   = pow(2, local.newbits)
+  subnet                   = var.insane_mode ? cidrsubnet(var.cidr, local.newbits, local.netnum - 2) : aviatrix_vpc.default.public_subnets[2].cidr
+  ha_subnet                = var.insane_mode ? cidrsubnet(var.cidr, local.newbits, local.netnum - 1) : aviatrix_vpc.default.public_subnets[3].cidr
+  bootstrap_storage_name_2 = length(var.bootstrap_storage_name_2) > 0 ? var.bootstrap_storage_name_2 : var.bootstrap_storage_name_1 #If storage 2 name is not provided, fallback to storage name 1.
+  storage_access_key_2     = length(var.storage_access_key_2) > 0 ? var.storage_access_key_2 : var.storage_access_key_1             #If storage 1 key is not provided, fallback to storage key 1.
+  file_share_folder_2      = length(var.file_share_folder_2) > 0 ? var.file_share_folder_2 : var.file_share_folder_1                #If storage 2 folder is not provided, fallback to folder 1.
 }

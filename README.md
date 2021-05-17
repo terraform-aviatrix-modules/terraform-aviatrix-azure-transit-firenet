@@ -76,6 +76,7 @@ Firewall images
 Palo Alto Networks VM-Series Next-Generation Firewall Bundle 1 
 Check Point CloudGuard IaaS Single Gateway R80.40 - Bring Your Own License
 Fortinet FortiGate (BYOL) Next-Generation Firewall
+Aviatrix FQDN Egress Filtering
 ```
 
 Firewall image versions tested
@@ -113,9 +114,12 @@ single_ip_snat | false | Enable single_ip mode Source NAT for this container
 enable_advertise_transit_cidr  | false | Switch to enable/disable advertise transit VPC network CIDR for a VGW connection
 bgp_polling_time  | 50 | BGP route polling time. Unit is in seconds
 bgp_ecmp  | false | Enable Equal Cost Multi Path (ECMP) routing for the next hop
-bootstrap_storage_name | null | Storagename to get bootstrap files from (PANW only)
-storage_access_key | null | Storage_access_key to access bootstrap storage (PANW only)
-file_share_folder | null | Name of the folder containing the bootstrap files (PANW only)
+bootstrap_storage_name_1 | null | Storagename to get bootstrap files from (PANW only). (If bootstrap_storage_name_2 is not set, this will used for all NGFW instances)
+storage_access_key_1 | null | Storage_access_key to access bootstrap storage (PANW only) (If storage_access_key_2 is not set, this will used for all NGFW instances)
+file_share_folder_1 | null | Name of the folder containing the bootstrap files (PANW only) (If file_share_folder_2 is not set, this will used for all NGFW instances)
+bootstrap_storage_name_2 | null | Storagename to get bootstrap files from (PANW only) (Only used when HA FW instance is deployed)
+storage_access_key_2 | null | Storage_access_key to access bootstrap storage (PANW only) (Only used when HA FW instance is deployed)
+file_share_folder_2 | null | Name of the folder containing the bootstrap files (PANW only) (Only used when HA FW instance is deployed)
 local_as_number | | Changes the Aviatrix Transit Gateway ASN number before you setup Aviatrix Transit Gateway connection configurations.
 enable_bgp_over_lan | false | Enable BGp over LAN. Creates eth4 for integration with SDWAN for example
 enable_egress_transit_firenet | false | Set to true to enable egress on transit gw

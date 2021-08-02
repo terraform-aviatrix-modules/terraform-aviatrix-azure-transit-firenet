@@ -270,6 +270,36 @@ variable "firewall_image_id" {
   default     = null
 }
 
+variable "learned_cidrs_approval_mode" {
+  description = "Learned cidrs approval mode. Defaults to Gateway. Valid values: gateway, connection"
+  type        = string
+  default     = null
+}
+
+variable "fail_close_enabled" {
+  description = "Set to true to enable fail_close"
+  type        = bool
+  default     = null
+}
+
+variable "user_data_1" {
+  description = "User data for bootstrapping Fortigate and Checkpoint firewalls"
+  type        = string
+  default     = null
+}
+
+variable "user_data_2" {
+  description = "User data for bootstrapping Fortigate and Checkpoint firewalls"
+  type        = string
+  default     = ""
+}
+
+variable "east_west_inspection_excluded_cidrs" {
+  description = "Network List Excluded From East-West Inspection."
+  type        = list(string)
+  default     = null
+}
+
 locals {
   is_checkpoint            = length(regexall("check", lower(var.firewall_image))) > 0    #Check if fw image contains checkpoint. Needs special handling for the username/password
   is_palo                  = length(regexall("palo", lower(var.firewall_image))) > 0     #Check if fw image contains palo. Needs special handling for management_subnet (CP & Fortigate null)
@@ -286,4 +316,5 @@ locals {
   bootstrap_storage_name_2 = length(var.bootstrap_storage_name_2) > 0 ? var.bootstrap_storage_name_2 : var.bootstrap_storage_name_1 #If storage 2 name is not provided, fallback to storage name 1.
   storage_access_key_2     = length(var.storage_access_key_2) > 0 ? var.storage_access_key_2 : var.storage_access_key_1             #If storage 1 key is not provided, fallback to storage key 1.
   file_share_folder_2      = length(var.file_share_folder_2) > 0 ? var.file_share_folder_2 : var.file_share_folder_1                #If storage 2 folder is not provided, fallback to folder 1.
+  user_data_2              = length(var.user_data_2) > 0 ? var.user_data_2 : var.user_data_1                                        #If user data 2 name is not provided, fallback to user data 1.
 }

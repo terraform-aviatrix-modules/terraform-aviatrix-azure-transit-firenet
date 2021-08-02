@@ -24,7 +24,7 @@ resource "aviatrix_transit_gateway" "default" {
   insane_mode                      = var.insane_mode
   enable_transit_firenet           = true
   ha_gw_size                       = var.ha_gw ? (var.insane_mode ? var.insane_instance_size : var.instance_size) : null
-  connected_transit                = var.connected_transit
+  connected_transit                = var.enable_egress_transit_firenet ? false : var.connected_transit
   bgp_manual_spoke_advertise_cidrs = var.bgp_manual_spoke_advertise_cidrs
   enable_learned_cidrs_approval    = var.learned_cidr_approval
   enable_segmentation              = var.enable_segmentation
@@ -41,6 +41,7 @@ resource "aviatrix_transit_gateway" "default" {
   tunnel_detection_time            = var.tunnel_detection_time
   tags                             = var.tags
   enable_multi_tier_transit        = var.enable_multi_tier_transit
+  learned_cidrs_approval_mode      = var.learned_cidrs_approval_mode
 }
 
 #Firewall instances
@@ -61,6 +62,7 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
   file_share_folder      = var.file_share_folder_1
   zone                   = var.az_support ? var.az1 : null
   firewall_image_id      = var.firewall_image_id
+  user_data              = var.user_data_1
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_1" {
@@ -80,6 +82,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
   file_share_folder      = var.file_share_folder_1
   zone                   = var.az_support ? var.az1 : null
   firewall_image_id      = var.firewall_image_id
+  user_data              = var.user_data_1
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_2" {
@@ -99,6 +102,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   file_share_folder      = local.file_share_folder_2
   zone                   = var.az_support ? var.az2 : null
   firewall_image_id      = var.firewall_image_id
+  user_data              = local.user_data_2
 }
 
 #FQDN Egress filtering instances
@@ -145,10 +149,13 @@ resource "aviatrix_gateway" "egress_instance_2" {
 
 resource "aviatrix_firenet" "firenet" {
   vpc_id                               = aviatrix_vpc.default.vpc_id
-  inspection_enabled                   = local.is_aviatrix ? false : var.inspection_enabled #Always switch to false if Aviatrix FQDN egress.
-  egress_enabled                       = local.is_aviatrix ? true : var.egress_enabled      #Always switch to true if Aviatrix FQDN egress.
+  inspection_enabled                   = local.is_aviatrix || var.enable_egress_transit_firenet ? false : var.inspection_enabled #Always switch to false if Aviatrix FQDN egress or egress transit firenet.
+  egress_enabled                       = local.is_aviatrix || var.enable_egress_transit_firenet ? true : var.egress_enabled      #Always switch to true if Aviatrix FQDN egress or egress transit firenet.
   manage_firewall_instance_association = false
   egress_static_cidrs                  = var.egress_static_cidrs
+  fail_close_enabled                   = var.fail_close_enabled
+  east_west_inspection_excluded_cidrs  = var.east_west_inspection_excluded_cidrs
+
   depends_on = [
     aviatrix_firewall_instance_association.firenet_instance,
     aviatrix_firewall_instance_association.firenet_instance1,

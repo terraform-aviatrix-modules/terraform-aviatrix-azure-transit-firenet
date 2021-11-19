@@ -140,11 +140,12 @@ This module will return the following objects:
 
 key | description
 :--- | :---
-vpc | The created VNET as an object with all of it's attributes. This was created using the aviatrix_vpc resource.
-transit_gateway | The created Aviatrix transit gateway as an object with all of it's attributes.
-aviatrix_firenet | The created Aviatrix firenet object with all of it's attributes.
-aviatrix_firewall_instance | A list of the created firewall instances and their attributes.
+[vnet](https://registry.terraform.io/providers/AviatrixSystems/aviatrix/latest/docs/resources/aviatrix_vpc) | The created VNET as an object with all of it's attributes. This was created using the aviatrix_vpc resource.
+[transit_gateway](https://registry.terraform.io/providers/AviatrixSystems/aviatrix/latest/docs/resources/aviatrix_transit_gateway) | The created Aviatrix transit gateway as an object with all of it's attributes.
+[aviatrix_firenet](https://registry.terraform.io/providers/AviatrixSystems/aviatrix/latest/docs/resources/aviatrix_firenet) | The created Aviatrix firenet object with all of it's attributes.
+[aviatrix_firewall_instance](https://registry.terraform.io/providers/AviatrixSystems/aviatrix/latest/docs/resources/aviatrix_firewall_instance) | A list of the created firewall instances and their attributes.
 azure_rg | The name of the Azure resource group that the Aviatrix infrastructure created in
 azure_vnet_name | The name of the Azure vnet created
 firewall_instance_nic_names | The names of the NICs of the firewall(s)
 fw_name | A list of the firewall names created
+

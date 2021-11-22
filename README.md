@@ -6,7 +6,7 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
-v5.0.0 | 0.13 - v1.x | >=6.5 | >=0.2.20.3
+v5.0.0 | 0.13 - v1.x | >=6.5 | >=0.2.20.1
 v4.0.3 | 0.13 + 0.14 | >=6.4 | >=0.2.19
 v4.0.0 | 0.13 + 0.14 | >=6.4 | >=0.2.19
 

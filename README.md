@@ -6,6 +6,7 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
+v5.0.0 | 0.13 - v1.x | >=6.5 | >=0.2.20.3
 v4.0.3 | 0.13 + 0.14 | >=6.4 | >=0.2.19
 v4.0.0 | 0.13 + 0.14 | >=6.4 | >=0.2.19
 
@@ -22,7 +23,7 @@ Examples shown below are specific to each vendor.
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "4.0.3"
+  version                = "5.0.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -34,7 +35,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "4.0.3"
+  version                = "5.0.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -48,7 +49,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "4.0.3"
+  version                = "5.0.0"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -134,6 +135,7 @@ fail_close_enabled | | Set to true to enable fail close
 user_data_1 | | User data for bootstrapping Fortigate and Checkpoint firewalls. (If user_data_2 is not set, this will used for all NGFW instances)
 user_data_2 | | User data for bootstrapping Fortigate and Checkpoint firewalls. (Only used if 2 or more FW instances are deployed, e.g. when ha_gw is true. Applies to "even" fw instances (2,4,6 etc))
 east_west_inspection_excluded_cidrs | | Network List Excluded From East-West Inspection.
+gov | false | Set to true if deploying this module in Azure GOV.
 
 ### Outputs
 This module will return the following objects:

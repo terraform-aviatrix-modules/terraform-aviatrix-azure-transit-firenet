@@ -66,8 +66,8 @@ key | value
 region | Azure region to deploy the transit VNET in
 account | The Azure access account on the Aviatrix controller, under which the controller will deploy this VNET
 cidr | The IP CIDR wo be used to create the VNET
-firewall_image | String for the firewall image to use
-firewall_image_version | The firewall image version specific to the NGFW vendor image (Not required when choosing Aviatrix FQDN egress)
+firewall_image | String for the firewall image to use (Optional when deploy_firenet = false)
+firewall_image_version | The firewall image version specific to the NGFW vendor image (Optional when choosing Aviatrix FQDN egress or when deploy_firenet = false)
 
 Firewall images
 ```

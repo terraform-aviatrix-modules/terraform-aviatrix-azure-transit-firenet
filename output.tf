@@ -35,5 +35,5 @@ output "firewall_instance_nic_names" {
 
 output "firewall_name" {
   description = "A list of the firewall names created"
-  value       = local.is_aviatrix ? null : (var.ha_gw ? [join("", regex("^(.*?):", aviatrix_firewall_instance.firewall_instance_1[0].name)), join("", regex("^(.*?):", aviatrix_firewall_instance.firewall_instance_2[0].name))] : [join("", regex("^(.*?):", aviatrix_firewall_instance.firewall_instance[0].name))])
+  value       = local.is_aviatrix ? null : (var.ha_gw ? [join("", regex("^(.*?):", aviatrix_firewall_instance.firewall_instance_1[0].firewall_name)), join("", regex("^(.*?):", aviatrix_firewall_instance.firewall_instance_2[0].firewall_name))] : [join("", regex("^(.*?):", aviatrix_firewall_instance.firewall_instance[0].firewall_name))])
 }

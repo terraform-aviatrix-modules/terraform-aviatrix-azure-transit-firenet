@@ -306,6 +306,12 @@ variable "gov" {
   default     = false
 }
 
+variable "deploy_firenet" {
+  description = "Set to false to fully deploy the Transit Firenet, but without the actual NGFW instances."
+  type        = bool
+  default     = true
+}
+
 locals {
   is_checkpoint            = length(regexall("check", lower(var.firewall_image))) > 0    #Check if fw image contains checkpoint. Needs special handling for the username/password
   is_palo                  = length(regexall("palo", lower(var.firewall_image))) > 0     #Check if fw image contains palo. Needs special handling for management_subnet (CP & Fortigate null)

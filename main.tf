@@ -46,7 +46,7 @@ resource "aviatrix_transit_gateway" "default" {
 
 #Firewall instances
 resource "aviatrix_firewall_instance" "firewall_instance" {
-  count                  = var.ha_gw ? 0 : (local.is_aviatrix ? 0 : 1) #If ha is false, and is_aviatrix is false, deploy 1
+  count                  = var.ha_gw ? 0 : (local.is_aviatrix ? 0 : (var.deploy_firenet ? 1 : 0)) #If ha is false, and is_aviatrix is false, deploy 1
   firewall_name          = "${local.name}-fw"
   firewall_size          = var.fw_instance_size
   vpc_id                 = aviatrix_vpc.default.vpc_id
@@ -66,7 +66,7 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_1" {
-  count                  = var.ha_gw ? (local.is_aviatrix ? 0 : 1) : 0 #If ha is true, and is_aviatrix is false, deploy 1
+  count                  = var.ha_gw ? (local.is_aviatrix ? 0 : (var.deploy_firenet ? 1 : 0)) : 0 #If ha is true, and is_aviatrix is false, deploy 1
   firewall_name          = "${local.name}-fw1"
   firewall_size          = var.fw_instance_size
   vpc_id                 = aviatrix_vpc.default.vpc_id
@@ -86,7 +86,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_2" {
-  count                  = var.ha_gw ? (local.is_aviatrix ? 0 : 1) : 0 #If ha is true, and is_aviatrix is false, deploy 1
+  count                  = var.ha_gw ? (local.is_aviatrix ? 0 : (var.deploy_firenet ? 1 : 0)) : 0 #If ha is true, and is_aviatrix is false, deploy 1
   firewall_name          = "${local.name}-fw2"
   firewall_size          = var.fw_instance_size
   vpc_id                 = aviatrix_vpc.default.vpc_id
@@ -107,7 +107,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
 
 #FQDN Egress filtering instances
 resource "aviatrix_gateway" "egress_instance" {
-  count         = var.ha_gw ? 0 : (local.is_aviatrix ? 1 : 0) #If ha is false, and is_aviatrix is true, deploy 1
+  count         = var.ha_gw ? 0 : (local.is_aviatrix ? (var.deploy_firenet ? 1 : 0) : 0) #If ha is false, and is_aviatrix is true, deploy 1
   cloud_type    = 8
   account_name  = var.account
   gw_name       = "${local.name}-egress-gw"
@@ -120,7 +120,7 @@ resource "aviatrix_gateway" "egress_instance" {
 }
 
 resource "aviatrix_gateway" "egress_instance_1" {
-  count         = var.ha_gw ? (local.is_aviatrix ? 1 : 0) : 0 #If ha is true, and is_aviatrix is true, deploy 1
+  count         = var.ha_gw ? (local.is_aviatrix ? (var.deploy_firenet ? 1 : 0) : 0) : 0 #If ha is true, and is_aviatrix is true, deploy 1
   cloud_type    = 8
   account_name  = var.account
   gw_name       = "${local.name}-egress-gw1"
@@ -134,7 +134,7 @@ resource "aviatrix_gateway" "egress_instance_1" {
 }
 
 resource "aviatrix_gateway" "egress_instance_2" {
-  count         = var.ha_gw ? (local.is_aviatrix ? 1 : 0) : 0 #If ha is true, and is_aviatrix is true, deploy 1
+  count         = var.ha_gw ? (local.is_aviatrix ? (var.deploy_firenet ? 1 : 0) : 0) : 0 #If ha is true, and is_aviatrix is true, deploy 1
   cloud_type    = 8
   account_name  = var.account
   gw_name       = "${local.name}-egress-gw2"
@@ -148,6 +148,7 @@ resource "aviatrix_gateway" "egress_instance_2" {
 }
 
 resource "aviatrix_firenet" "firenet" {
+  count                                = var.deploy_firenet ? 1 : 0
   vpc_id                               = aviatrix_vpc.default.vpc_id
   inspection_enabled                   = local.is_aviatrix || var.enable_egress_transit_firenet ? false : var.inspection_enabled #Always switch to false if Aviatrix FQDN egress or egress transit firenet.
   egress_enabled                       = local.is_aviatrix || var.enable_egress_transit_firenet ? true : var.egress_enabled      #Always switch to true if Aviatrix FQDN egress or egress transit firenet.
@@ -167,7 +168,7 @@ resource "aviatrix_firenet" "firenet" {
 }
 
 resource "aviatrix_firewall_instance_association" "firenet_instance" {
-  count                = var.ha_gw ? 0 : 1
+  count                = var.ha_gw ? 0 : (var.deploy_firenet ? 1 : 0)
   vpc_id               = aviatrix_vpc.default.vpc_id
   firenet_gw_name      = aviatrix_transit_gateway.default.gw_name
   instance_id          = local.is_aviatrix ? aviatrix_gateway.egress_instance[0].gw_name : aviatrix_firewall_instance.firewall_instance[0].instance_id
@@ -180,7 +181,7 @@ resource "aviatrix_firewall_instance_association" "firenet_instance" {
 }
 
 resource "aviatrix_firewall_instance_association" "firenet_instance1" {
-  count                = var.ha_gw ? 1 : 0
+  count                = var.ha_gw ? (var.deploy_firenet ? 1 : 0) : 0
   vpc_id               = aviatrix_vpc.default.vpc_id
   firenet_gw_name      = aviatrix_transit_gateway.default.gw_name
   instance_id          = local.is_aviatrix ? aviatrix_gateway.egress_instance_1[0].gw_name : aviatrix_firewall_instance.firewall_instance_1[0].instance_id
@@ -193,7 +194,7 @@ resource "aviatrix_firewall_instance_association" "firenet_instance1" {
 }
 
 resource "aviatrix_firewall_instance_association" "firenet_instance2" {
-  count                = var.ha_gw ? 1 : 0
+  count                = var.ha_gw ? (var.deploy_firenet ? 1 : 0) : 0
   vpc_id               = aviatrix_vpc.default.vpc_id
   firenet_gw_name      = aviatrix_transit_gateway.default.ha_gw_name
   instance_id          = local.is_aviatrix ? aviatrix_gateway.egress_instance_2[0].gw_name : aviatrix_firewall_instance.firewall_instance_2[0].instance_id

@@ -66,8 +66,8 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_1" {
-  count                  = var.ha_gw ? (local.is_aviatrix ? 0 : (var.deploy_firenet ? 1 : 0)) : 0 #If ha is true, and is_aviatrix is false, deploy 1
-  firewall_name          = "${local.name}-fw1"
+  count                  = var.ha_gw ? (local.is_aviatrix ? 0 : (var.deploy_firenet ? var.fw_amount / 2 : 0)) : 0 #If ha is true, and is_aviatrix is false, deploy var.fw_amount / 2
+  firewall_name          = "${local.name}-az1-fw${count.index + 1}"
   firewall_size          = var.fw_instance_size
   vpc_id                 = aviatrix_vpc.default.vpc_id
   firewall_image         = var.firewall_image
@@ -86,8 +86,8 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_2" {
-  count                  = var.ha_gw ? (local.is_aviatrix ? 0 : (var.deploy_firenet ? 1 : 0)) : 0 #If ha is true, and is_aviatrix is false, deploy 1
-  firewall_name          = "${local.name}-fw2"
+  count                  = var.ha_gw ? (local.is_aviatrix ? 0 : (var.deploy_firenet ? var.fw_amount / 2 : 0)) : 0 #If ha is true, and is_aviatrix is false, deploy var.fw_amount / 2
+  firewall_name          = "${local.name}-az2-fw${count.index + 1}"
   firewall_size          = var.fw_instance_size
   vpc_id                 = aviatrix_vpc.default.vpc_id
   firewall_image         = var.firewall_image
@@ -120,10 +120,10 @@ resource "aviatrix_gateway" "egress_instance" {
 }
 
 resource "aviatrix_gateway" "egress_instance_1" {
-  count         = var.ha_gw ? (local.is_aviatrix ? (var.deploy_firenet ? 1 : 0) : 0) : 0 #If ha is true, and is_aviatrix is true, deploy 1
+  count         = var.ha_gw ? (local.is_aviatrix ? (var.deploy_firenet ? var.fw_amount / 2 : 0) : 0) : 0 #If ha is true, and is_aviatrix is true, deploy var.fw_amount / 2
   cloud_type    = 8
   account_name  = var.account
-  gw_name       = "${local.name}-egress-gw1"
+  gw_name       = "${local.name}-az1-egress-gw${count.index + 1}"
   vpc_id        = aviatrix_vpc.default.vpc_id
   vpc_reg       = var.region
   gw_size       = var.fw_instance_size
@@ -134,10 +134,10 @@ resource "aviatrix_gateway" "egress_instance_1" {
 }
 
 resource "aviatrix_gateway" "egress_instance_2" {
-  count         = var.ha_gw ? (local.is_aviatrix ? (var.deploy_firenet ? 1 : 0) : 0) : 0 #If ha is true, and is_aviatrix is true, deploy 1
+  count         = var.ha_gw ? (local.is_aviatrix ? (var.deploy_firenet ? var.fw_amount / 2 : 0) : 0) : 0 #If ha is true, and is_aviatrix is true, deploy var.fw_amount / 2
   cloud_type    = 8
   account_name  = var.account
-  gw_name       = "${local.name}-egress-gw2"
+  gw_name       = "${local.name}-az2-egress-gw${count.index + 1}"
   vpc_id        = aviatrix_vpc.default.vpc_id
   vpc_reg       = var.region
   gw_size       = var.fw_instance_size
@@ -181,27 +181,27 @@ resource "aviatrix_firewall_instance_association" "firenet_instance" {
 }
 
 resource "aviatrix_firewall_instance_association" "firenet_instance1" {
-  count                = var.ha_gw ? (var.deploy_firenet ? 1 : 0) : 0
+  count                = var.ha_gw ? (var.deploy_firenet ? var.fw_amount / 2 : 0) : 0
   vpc_id               = aviatrix_vpc.default.vpc_id
   firenet_gw_name      = aviatrix_transit_gateway.default.gw_name
-  instance_id          = local.is_aviatrix ? aviatrix_gateway.egress_instance_1[0].gw_name : aviatrix_firewall_instance.firewall_instance_1[0].instance_id
-  firewall_name        = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_1[0].firewall_name
-  lan_interface        = local.is_aviatrix ? aviatrix_gateway.egress_instance_1[0].fqdn_lan_interface : aviatrix_firewall_instance.firewall_instance_1[0].lan_interface
-  management_interface = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_1[0].management_interface
-  egress_interface     = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_1[0].egress_interface
+  instance_id          = local.is_aviatrix ? aviatrix_gateway.egress_instance_1[count.index].gw_name : aviatrix_firewall_instance.firewall_instance_1[count.index].instance_id
+  firewall_name        = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_1[count.index].firewall_name
+  lan_interface        = local.is_aviatrix ? aviatrix_gateway.egress_instance_1[count.index].fqdn_lan_interface : aviatrix_firewall_instance.firewall_instance_1[count.index].lan_interface
+  management_interface = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_1[count.index].management_interface
+  egress_interface     = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_1[count.index].egress_interface
   vendor_type          = local.is_aviatrix ? "fqdn_gateway" : null
   attached             = var.attached
 }
 
 resource "aviatrix_firewall_instance_association" "firenet_instance2" {
-  count                = var.ha_gw ? (var.deploy_firenet ? 1 : 0) : 0
+  count                = var.ha_gw ? (var.deploy_firenet ? var.fw_amount / 2 : 0) : 0
   vpc_id               = aviatrix_vpc.default.vpc_id
   firenet_gw_name      = aviatrix_transit_gateway.default.ha_gw_name
-  instance_id          = local.is_aviatrix ? aviatrix_gateway.egress_instance_2[0].gw_name : aviatrix_firewall_instance.firewall_instance_2[0].instance_id
-  firewall_name        = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_2[0].firewall_name
-  lan_interface        = local.is_aviatrix ? aviatrix_gateway.egress_instance_2[0].fqdn_lan_interface : aviatrix_firewall_instance.firewall_instance_2[0].lan_interface
-  management_interface = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_2[0].management_interface
-  egress_interface     = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_2[0].egress_interface
+  instance_id          = local.is_aviatrix ? aviatrix_gateway.egress_instance_2[count.index].gw_name : aviatrix_firewall_instance.firewall_instance_2[count.index].instance_id
+  firewall_name        = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_2[count.index].firewall_name
+  lan_interface        = local.is_aviatrix ? aviatrix_gateway.egress_instance_2[count.index].fqdn_lan_interface : aviatrix_firewall_instance.firewall_instance_2[count.index].lan_interface
+  management_interface = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_2[count.index].management_interface
+  egress_interface     = local.is_aviatrix ? null : aviatrix_firewall_instance.firewall_instance_2[count.index].egress_interface
   vendor_type          = local.is_aviatrix ? "fqdn_gateway" : null
   attached             = var.attached
 }

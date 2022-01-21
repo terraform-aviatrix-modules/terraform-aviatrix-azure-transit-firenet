@@ -17,5 +17,4 @@ module "transit_firenet_1" {
   account                = "Azure"
   firewall_image         = "Palo Alto Networks VM-Series Next-Generation Firewall Bundle 1"
   firewall_image_version = "9.1.0"
-  ha_gw                  = false
 }

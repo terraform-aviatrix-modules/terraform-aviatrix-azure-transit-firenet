@@ -114,6 +114,7 @@ file_share_folder_1 | null | Name of the folder containing the bootstrap files (
 file_share_folder_2 | null | Name of the folder containing the bootstrap files (PANW only) (Only used when HA FW instance is deployed)
 firewall_image_id | | Custom Firewall image ID.
 firewall_username | fwadmin | Default username for administrative account on the firewall. **_For Check Point firewalls it will always default to admin_**. Admin is not allowed for other image types. Should not contain special chars.
+fw_amount | 2 | The amount of NGFW instances to deploy. These will be deployed accross multiple AZ's. Amount must be even and only applies to when ha_gw enabled.
 fw_instance_size | Standard_D3_v2 | Size of the firewall instances
 gov | false | Set to true if deploying this module in Azure GOV.
 ha_gw | true | Set to false to deploy single Aviatrix gateway. When set to false, fw_amount is ignored and only a single NGFW instance is deployed.
@@ -137,6 +138,7 @@ tags | null | Map of tags to assign to the gateway.
 tunnel_detection_time | null | The IPsec tunnel down detection time for the Spoke Gateway in seconds. Must be a number in the range [20-600]. Default is 60.
 user_data_1 | | User data for bootstrapping Fortigate and Checkpoint firewalls. (If user_data_2 is not set, this will used for all NGFW instances)
 user_data_2 | | User data for bootstrapping Fortigate and Checkpoint firewalls. (Only used if 2 or more FW instances are deployed, e.g. when ha_gw is true. Applies to "even" fw instances (2,4,6 etc))
+
 
 ### Outputs
 This module will return the following objects:

@@ -43,6 +43,12 @@ variable "attached" {
   default     = true
 }
 
+variable "fw_amount" {
+  description = "Integer that determines the amount of NGFW instances to launch"
+  type        = number
+  default     = 2
+}
+
 variable "name" {
   description = "Custom name for VNETs, gateways, and firewalls"
   type        = string

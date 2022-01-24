@@ -12,10 +12,6 @@ The included tests assume the following access account with these names are conf
 Cloud | Access Account
 ---|---
 Azure | Azure
-AWS | AWS
-Google Cloud | GCP
-Alibaba | ALI
-Oracle Cloud | OCI
 
 - Credentials<br>
 Set the following enviroment variables before execution

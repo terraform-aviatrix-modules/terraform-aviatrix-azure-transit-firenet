@@ -120,7 +120,7 @@ resource "aviatrix_gateway" "egress_instance" {
   subnet        = aviatrix_vpc.default.subnets[2].cidr
   fqdn_lan_cidr = aviatrix_transit_gateway.default.lan_interface_cidr
   zone          = var.az_support ? var.az1 : null
-  tags                   = var.fw_tags
+  tags          = var.fw_tags
 }
 
 resource "aviatrix_gateway" "egress_instance_1" {
@@ -135,7 +135,7 @@ resource "aviatrix_gateway" "egress_instance_1" {
   single_az_ha  = var.single_az_ha
   fqdn_lan_cidr = aviatrix_transit_gateway.default.lan_interface_cidr
   zone          = var.az_support ? var.az1 : null
-  tags                   = var.fw_tags
+  tags          = var.fw_tags
 }
 
 resource "aviatrix_gateway" "egress_instance_2" {
@@ -150,7 +150,7 @@ resource "aviatrix_gateway" "egress_instance_2" {
   single_az_ha  = var.single_az_ha
   fqdn_lan_cidr = aviatrix_transit_gateway.default.ha_lan_interface_cidr
   zone          = var.az_support ? var.az2 : null
-  tags                   = var.fw_tags
+  tags          = var.fw_tags
 }
 
 resource "aviatrix_firenet" "firenet" {

@@ -63,6 +63,7 @@ resource "aviatrix_firewall_instance" "firewall_instance" {
   zone                   = var.az_support ? var.az1 : null
   firewall_image_id      = var.firewall_image_id
   user_data              = var.user_data_1
+  tags                   = var.fw_tags
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_1" {
@@ -83,6 +84,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_1" {
   zone                   = var.az_support ? var.az1 : null
   firewall_image_id      = var.firewall_image_id
   user_data              = var.user_data_1
+  tags                   = var.fw_tags
 }
 
 resource "aviatrix_firewall_instance" "firewall_instance_2" {
@@ -103,6 +105,7 @@ resource "aviatrix_firewall_instance" "firewall_instance_2" {
   zone                   = var.az_support ? var.az2 : null
   firewall_image_id      = var.firewall_image_id
   user_data              = local.user_data_2
+  tags                   = var.fw_tags
 }
 
 #FQDN Egress filtering instances
@@ -117,6 +120,7 @@ resource "aviatrix_gateway" "egress_instance" {
   subnet        = aviatrix_vpc.default.subnets[2].cidr
   fqdn_lan_cidr = aviatrix_transit_gateway.default.lan_interface_cidr
   zone          = var.az_support ? var.az1 : null
+  tags                   = var.fw_tags
 }
 
 resource "aviatrix_gateway" "egress_instance_1" {
@@ -131,6 +135,7 @@ resource "aviatrix_gateway" "egress_instance_1" {
   single_az_ha  = var.single_az_ha
   fqdn_lan_cidr = aviatrix_transit_gateway.default.lan_interface_cidr
   zone          = var.az_support ? var.az1 : null
+  tags                   = var.fw_tags
 }
 
 resource "aviatrix_gateway" "egress_instance_2" {
@@ -145,6 +150,7 @@ resource "aviatrix_gateway" "egress_instance_2" {
   single_az_ha  = var.single_az_ha
   fqdn_lan_cidr = aviatrix_transit_gateway.default.ha_lan_interface_cidr
   zone          = var.az_support ? var.az2 : null
+  tags                   = var.fw_tags
 }
 
 resource "aviatrix_firenet" "firenet" {

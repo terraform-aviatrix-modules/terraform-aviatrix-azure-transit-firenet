@@ -6,7 +6,7 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
-v5.0.0 | 0.13 - v1.x | >=6.5 | >=0.2.20.1
+v5.0.0 | 0.13 - 1.x | >=6.6 | 2.21.0-6.6.ga
 v4.0.3 | 0.13 + 0.14 | >=6.4 | >=0.2.19
 v4.0.0 | 0.13 + 0.14 | >=6.4 | >=0.2.19
 
@@ -116,6 +116,7 @@ firewall_image_id | | Custom Firewall image ID.
 firewall_username | fwadmin | Default username for administrative account on the firewall. **_For Check Point firewalls it will always default to admin_**. Admin is not allowed for other image types. Should not contain special chars.
 fw_amount | 2 | The amount of NGFW instances to deploy. These will be deployed accross multiple AZ's. Amount must be even and only applies to when ha_gw enabled.
 fw_instance_size | Standard_D3_v2 | Size of the firewall instances
+fw_tags | null | Map of tags to assign to the firewall or FQDN egress gw's.
 gov | false | Set to true if deploying this module in Azure GOV.
 ha_gw | true | Set to false to deploy single Aviatrix gateway. When set to false, fw_amount is ignored and only a single NGFW instance is deployed.
 insane_instance_size | Standard_D3_v2 | Instance size used when insane mode is enabled.
@@ -151,6 +152,4 @@ key | description
 [aviatrix_firewall_instance](https://registry.terraform.io/providers/AviatrixSystems/aviatrix/latest/docs/resources/aviatrix_firewall_instance) | A list of the created firewall instances and their attributes.
 azure_rg | The name of the Azure resource group that the Aviatrix infrastructure created in
 azure_vnet_name | The name of the Azure vnet created
-firewall_instance_nic_names | The names of the NICs of the firewall(s)
-fw_name | A list of the firewall names created
 

@@ -325,6 +325,12 @@ variable "deploy_firenet" {
   default     = true
 }
 
+variable "custom_fw_names" {
+  description = "If set, the NGFW instances will be deployed with these names. First half of the list for instances in az1, second half for az2."
+  type        = list(string)
+  default     = []
+}
+
 locals {
   is_checkpoint            = length(regexall("check", lower(var.firewall_image))) > 0    #Check if fw image contains checkpoint. Needs special handling for the username/password
   is_palo                  = length(regexall("palo", lower(var.firewall_image))) > 0     #Check if fw image contains palo. Needs special handling for management_subnet (CP & Fortigate null)
@@ -343,4 +349,5 @@ locals {
   file_share_folder_2      = length(var.file_share_folder_2) > 0 ? var.file_share_folder_2 : var.file_share_folder_1                #If storage 2 folder is not provided, fallback to folder 1.
   user_data_2              = length(var.user_data_2) > 0 ? var.user_data_2 : var.user_data_1                                        #If user data 2 name is not provided, fallback to user data 1.
   cloud_type               = var.gov ? 32 : 8
+  use_custom_fw_names      = length(var.custom_fw_names) > 0
 }

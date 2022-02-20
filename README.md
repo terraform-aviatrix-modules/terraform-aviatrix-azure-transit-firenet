@@ -99,6 +99,7 @@ bgp_polling_time  | 50 | BGP route polling time. Unit is in seconds
 bootstrap_storage_name_1 | null | Storagename to get bootstrap files from (PANW only). (If bootstrap_storage_name_2 is not set, this will used for all NGFW instances)
 bootstrap_storage_name_2 | null | Storagename to get bootstrap files from (PANW only) (Only used when HA FW instance is deployed)
 connected_transit | true | Set to false to disable connected_transit
+custom_fw_names | [] | If set, the NGFW instances will be deployed with the names provided in this list. First half of the list for instances in az1, second half for az2.
 deploy_firenet | true | Set to false to only deploy the Transit, but without the actual NGFW instances and Firenet settings (e.g. if you want to deploy that later or manually).
 east_west_inspection_excluded_cidrs | | Network List Excluded From East-West Inspection.
 egress_enabled | false | Set to true to enable egress inspection on the firewall instances

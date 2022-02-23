@@ -6,7 +6,8 @@ This module deploys a VNET, Aviatrix transit gateways (HA), and firewall instanc
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
 :--- | :--- | :--- | :---
-v5.0.0 | 0.13 - 1.x | >=6.6 | 2.21.0-6.6.ga
+v5.0.1 | 0.13 - 1.x | >=6.6 | 2.21.0-6.6.ga
+v5.0.0 | 0.13 - 1.x | >=6.6 | 2.21.0-6.6.ga - Pulled because of bug.
 v4.0.3 | 0.13 + 0.14 | >=6.4 | >=0.2.19
 v4.0.0 | 0.13 + 0.14 | >=6.4 | >=0.2.19
 
@@ -23,7 +24,7 @@ Examples shown below are specific to each vendor.
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "5.0.0"
+  version                = "v5.0.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -36,7 +37,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "5.0.0"
+  version                = "v5.0.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -49,7 +50,7 @@ module "transit_firenet_1" {
 ```
 module "transit_firenet_1" {
   source                 = "terraform-aviatrix-modules/azure-transit-firenet/aviatrix"
-  version                = "5.0.0"
+  version                = "v5.0.1"
   cidr                   = "10.1.0.0/20"
   region                 = "East US"
   account                = "Azure"
@@ -88,7 +89,6 @@ The following variables are optional:
 
 key | default | value
 :--- | :--- | :---
-active_mesh | true | Set to false to disable active_mesh
 attached | true | Attach firewall instances to Aviatrix Gateways
 az_support | true | Set to false if the Azure region does not support Availability Zones.
 az1 | az-1 | AZ Zone to be used for Transit GW + NGFW deployment.

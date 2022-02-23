@@ -88,7 +88,6 @@ The following variables are optional:
 
 key | default | value
 :--- | :--- | :---
-active_mesh | true | Set to false to disable active_mesh
 attached | true | Attach firewall instances to Aviatrix Gateways
 az_support | true | Set to false if the Azure region does not support Availability Zones.
 az1 | az-1 | AZ Zone to be used for Transit GW + NGFW deployment.
